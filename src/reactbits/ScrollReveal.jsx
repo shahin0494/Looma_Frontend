@@ -40,7 +40,7 @@ const ScrollReveal = ({
 
     gsap.fromTo(
       el,
-      { transformOrigin: '0% 50%', rotate: baseRotation },
+      { transformOrigin: '0% 75%', rotate: baseRotation },
       {
         ease: 'none',
         rotate: 0,
@@ -66,9 +66,9 @@ const ScrollReveal = ({
         scrollTrigger: {
           trigger: el,
           scroller,
-          start: 'top bottom-=20%',
+          start: 'top 80%',
           end: wordAnimationEnd,
-          scrub: true
+          scrub: 5
         }
       }
     );
@@ -84,9 +84,9 @@ const ScrollReveal = ({
           scrollTrigger: {
             trigger: el,
             scroller,
-            start: 'top bottom-=20%',
+            start: 'top 80%',
             end: wordAnimationEnd,
-            scrub: true
+            scrub: 5
           }
         }
       );
