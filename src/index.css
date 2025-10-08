@@ -38,9 +38,9 @@
   height: 60px;
   padding: 0;
   background-color: white;
-  border: 0.5px solid rgba(255, 255, 255, 0.1);
+  border: 0.5px solid rgba(247, 0, 0, 0.1);
   border-radius: 0.75rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(190, 18, 18, 0.1);
   position: relative;
   overflow: hidden;
   will-change: height;
@@ -282,10 +282,24 @@
 .scroll-reveal-text {
   font-size: clamp(1.6rem, 4vw, 3rem);
   line-height: 1.5;
-  font-weight: 400;
+  font-weight: 600;
 }
 
 .word {
   display: inline-block;
 }
 
+/* base state: hidden line */
+.underline-reveal .underline-bar {
+  transition: width 0.5s ease;
+}
+
+/* when scrolled into view (animation triggered) */
+.underline-reveal.revealed .underline-bar {
+  width: 0;
+}
+
+/* when hovered: close the underline smoothly */
+.underline-reveal:hover .underline-bar {
+  width: 100%;
+}
