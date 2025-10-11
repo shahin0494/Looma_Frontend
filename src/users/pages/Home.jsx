@@ -15,7 +15,7 @@ function Home() {
   const containerRef = useRef(null);
 
   const demoItems = [
-    { link: '/dashboard', text: 'Get Started' },
+    { link: '/hire-me', text: 'Get Started' },
 
   ];
 
@@ -41,7 +41,7 @@ function Home() {
         speed={0.4}
         squareSize={100}
         direction='diagonal'
-        borderColor='#f0f0f0'
+        borderColor='rgba(71, 10, 31,0.1)'
         hoverFillColor='#ffffff'
       >
         <Header
@@ -56,10 +56,10 @@ function Home() {
           activeHref="/"
           className="custom-nav"
           ease="power2.easeOut"
-          baseColor="#000000"
-          pillColor="#ffffff"
+          baseColor="#4C0101"
+          pillColor="#FFFBEB"
           hoveredPillTextColor="#ffffff"
-          pillTextColor="#000000"
+          pillTextColor="#4C0101"
         />
           {/* section 1 */}
         <section className='grid grid-cols-1 md:grid-cols-2 justify-center md:h-screen  h-auto items-center gap-5 md:px-40 p-5'>
@@ -80,7 +80,7 @@ function Home() {
                   rows={6}
                   columns={6}
                   containerSize="60vmin"
-                  lineColor="black"
+                  lineColor="rgb(71, 10, 31)"
                   lineWidth="0.8vmin"
                   lineHeight="5vmin"
                   baseAngle={0}

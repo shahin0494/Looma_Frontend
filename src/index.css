@@ -303,3 +303,31 @@
 .underline-reveal:hover .underline-bar {
   width: 100%;
 }
+
+/* mansory */
+/* Add this to your index.css file */
+/* Masonry Layout with Gaps */
+.list {
+  position: relative;
+  width: 100%;
+  min-height: 800px;
+  background: transparent;
+}
+
+.item-wrapper {
+  position: absolute;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  padding: 8px; /* This creates the gap */
+  box-sizing: border-box;
+}
+
+.item-img {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
