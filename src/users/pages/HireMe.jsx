@@ -1,4 +1,3 @@
-import { div } from 'motion/react-client'
 import React from 'react'
 import Header from '../components/Header'
 import logo from '/logo22.jpg'
@@ -13,9 +12,9 @@ function HireMe() {
         logoAlt="Company Logo"
         items={[
           { label: 'Home', href: '/' },
-          { label: 'Portfolio', href: '/Portfolio' },
-          { label: 'Hire', href: '/Hire-me' },
-          { label: 'Dashboard', href: '/Dashboard' }
+            { label: 'Hire', href: '/Hire-me' },
+            { label: 'Dashboard', href: '/Dashboard' },
+            { label: 'Contact', href: '/Contact' },
         ]}
         activeHref="/Hire-me"
         className="custom-nav"

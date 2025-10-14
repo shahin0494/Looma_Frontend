@@ -8,10 +8,16 @@ import { CgDesignmodo } from "react-icons/cg";
 import { MdOutlineAutoAwesomeMotion } from "react-icons/md";
 import { TbTools } from "react-icons/tb";
 import Masonry from "../../reactbits/Masnory";
+import Footer from '../../component/Footer'
+import FlowingMenu from "../../reactbits/FlowingMenu";
 
 function Portfolio() {
   const [activeTab, setActiveTab] = useState('about');
 
+  const demoItems = [
+    { link: '/hire-me', text: 'Hire Now' },
+
+  ];
 
   const items = [
     {
@@ -74,7 +80,7 @@ function Portfolio() {
       url: "https://example.com/three",
       height: 400,
     },
-    
+
   ];
   // ... more items
 
@@ -88,9 +94,9 @@ function Portfolio() {
         logoAlt="Company Logo"
         items={[
           { label: 'Home', href: '/' },
-          { label: 'Portfolio', href: '/Portfolio' },
-          { label: 'Hire', href: '/Hire-me' },
-          { label: 'Dashboard', href: '/Dashboard' }
+            { label: 'Hire', href: '/Hire-me' },
+            { label: 'Dashboard', href: '/Dashboard' },
+            { label: 'Contact', href: '/Contact' },
         ]}
         activeHref="/Hire-me"
         className="custom-nav"
@@ -321,12 +327,9 @@ function Portfolio() {
         <div className="bg-neutral-900 rounded-xl p-8 shadow-2xl">
           <h1 className="text-5xl  font-bold mb-6 text-neutral-200">Works</h1>
 
-          <div style={{
+          <div className=" h-620 md:h-130" style={{
             position: 'relative',
-            width: '100%',
-            minHeight: '500px'
-          }}>
-
+            width: '100%'}}>
             <style>{`
                     .list { position: relative; width: 100%; min-height: 100%; }
                     .item-wrapper { position: absolute; cursor: pointer; }
@@ -353,7 +356,14 @@ function Portfolio() {
           </div>
 
         </div>
+
       </section>
+      <div >
+        <div style={{ height: '70px', position: 'relative' }} className='rounded border border-neutral-500 flex items-center justify-center left-170 w-70 '>
+          <FlowingMenu items={demoItems} />
+        </div>
+      </div>
+      <Footer />
     </div>
   )
 }

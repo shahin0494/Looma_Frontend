@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route , Routes  } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import Home from './users/pages/Home'
 import Contact from './users/pages/Contact'
 import Dashboard from './users/pages/Dashboard'
@@ -18,8 +18,8 @@ import Pnf from './pages/Pnf'
 const App = () => {
   return (
     <>
-    <Routes>
-     {/* Public Routes */}
+      <Routes>
+        {/* Public Routes */}
         <Route path='/' element={<Home />} />
         <Route path='/login' element={<Auth />} />
         <Route path='/register' element={<Auth register />} />
@@ -38,7 +38,8 @@ const App = () => {
 
         {/* 404 */}
         <Route path='/*' element={<Pnf />} />
-    </Routes>
+      </Routes>
+      
     </>
   )
 }
