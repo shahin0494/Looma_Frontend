@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom'
 import { FaEye, FaEyeSlash, FaGoogle, FaLinkedin, FaGithub } from 'react-icons/fa'
 import Squares from '../reactbits/Squares'
 import logo from '/logo22.jpg'
-import Galaxy from '../reactbits/Galaxy'
 
 function Auth({ register = false }) {
   const [isLogin, setIsLogin] = useState(!register)
@@ -32,7 +31,19 @@ function Auth({ register = false }) {
   }
 
   return (
-    <div style={{height:"110vh"}} className="min-h-screen bg-neutral-950 overflow-hidden relative">
+    <div style={{ height: "110vh" }} className="min-h-screen bg-neutral-950 overflow-hidden relative">
+      {/* 🔸 Background video */}
+
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute top-0 left-0 w-full h-full object-cover z-0"
+      >
+        <source src="/bg5.mp4" type="video/mp4" />
+      </video>
+
       <Squares
         className=""
         speed={0.3}
@@ -43,7 +54,7 @@ function Auth({ register = false }) {
       >
         {/* Background gradient overlay */}
         {/* <div className="absolute inset-0 bg-gradient-to-br from-neutral-950 via-neutral-900 to-red-950/20"></div> */}
-        
+
         {/* Main content */}
         <div className="relative z-10 flex items-center justify-center min-h-screen p-4">
           <motion.div
@@ -59,9 +70,9 @@ function Auth({ register = false }) {
               transition={{ delay: 0.2, duration: 0.5 }}
               className="text-center mb-8"
             >
-              <img 
-                src={logo} 
-                alt="Logo" 
+              <img
+                src={logo}
+                alt="Logo"
                 className="w-16 h-16 mx-auto mb-4 rounded-full object-cover border-2 border-red-800/30"
               />
               <h1 className="text-4xl font-bold text-neutral-100 mb-2 tracking-tight">
@@ -81,7 +92,7 @@ function Auth({ register = false }) {
             >
               {/* Frosted glass background */}
               <div className="absolute inset-0 bg-neutral-800/30 backdrop-blur-xl rounded-2xl border border-neutral-700/50 shadow-2xl"></div>
-              
+
               {/* Form content */}
               <div className="relative p-8 ">
                 {/* User type selection (only for register) */}
@@ -97,22 +108,20 @@ function Auth({ register = false }) {
                       <button
                         type="button"
                         onClick={() => setUserType('freelancer')}
-                        className={`p-3 rounded-lg text-sm font-medium transition-all duration-200 ${
-                          userType === 'freelancer'
+                        className={`p-3 rounded-lg text-sm font-medium transition-all duration-200 ${userType === 'freelancer'
                             ? 'bg-red-800/20 text-red-300 border border-red-700/50'
                             : 'bg-neutral-700/50 text-neutral-400 border border-neutral-600/30 hover:bg-neutral-700/70'
-                        }`}
+                          }`}
                       >
                         Freelancer
                       </button>
                       <button
                         type="button"
                         onClick={() => setUserType('client')}
-                        className={`p-3 rounded-lg text-sm font-medium transition-all duration-200 ${
-                          userType === 'client'
+                        className={`p-3 rounded-lg text-sm font-medium transition-all duration-200 ${userType === 'client'
                             ? 'bg-red-800/20 text-red-300 border border-red-700/50'
                             : 'bg-neutral-700/50 text-neutral-400 border border-neutral-600/30 hover:bg-neutral-700/70'
-                        }`}
+                          }`}
                       >
                         Client
                       </button>
@@ -158,7 +167,7 @@ function Auth({ register = false }) {
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-neutral-700/50 border border-neutral-600/50 rounded-lg text-neutral-100 placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-red-800/50 focus:border-red-700/50 transition-all duration-200 backdrop-blur-sm"
+                      className="w-full px-4 py-3 bg-neutral-700/50 border border-neutral-600/50 rounded-lg text-neutral-100 placeholder-neutral-200 focus:outline-none focus:ring-2 focus:ring-red-800/50 focus:border-red-700/50 transition-all duration-200 backdrop-blur-sm"
                       placeholder="Enter your email"
                       required
                     />
@@ -303,8 +312,8 @@ function Auth({ register = false }) {
               transition={{ delay: 1.2 }}
               className="text-center mt-8"
             >
-              <Link 
-                to="/" 
+              <Link
+                to="/"
                 className="text-neutral-500 hover:text-neutral-300 text-sm transition-colors inline-flex items-center"
               >
                 ← Back to home

@@ -7,7 +7,7 @@ import { PiFacebookLogo } from 'react-icons/pi'
 import { SiLinkedin } from 'react-icons/si'
 import DotGrid from '../../reactbits/Dotgrid'
 import ClickSpark from '../../reactbits/ClickSpark'
-
+import { motion } from 'framer-motion';
 
 function Contact() {
   return (
@@ -36,8 +36,19 @@ function Contact() {
         hoveredPillTextColor="#DC2626"
         pillTextColor="#E5E5E5"
         />
-        <div style={{ display: "grid", gridTemplateColumns: "500px 1180px" }} className='bg-red-700' >
-          <div style={{ width: '100%', height: '600px', position: 'relative' }} >
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+          style={{ display: "grid", gridTemplateColumns: "500px 1180px" }}
+          className='bg-red-700'
+        >
+          <motion.div
+            style={{ width: '100%', height: '600px', position: 'relative' }}
+            initial={{ scale: 0.98, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+          >
             <div className="relative w-full h-screen">
               <DotGrid
                 dotSize={3}
@@ -56,30 +67,30 @@ function Contact() {
                 
               </div>
             </div>
-          </div>
+          </motion.div>
           <div className='bg-neutral-900 -mt-30 h-auto'>
             <div className='mt-110 px-15 font-extralight  text-xl text-neutral-400'>
               <div className='flex justify-between px-10'>
                 
                 <div>
-                  <h1 className='text-6xl'>Write Us  </h1>
-                  <p className='text-sm mt-3' >support@looma.in</p>
+                  <motion.h1 initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, delay: 0.2 }} className='text-6xl'>Write Us  </motion.h1>
+                  <motion.p initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, delay: 0.3 }} className='text-sm mt-3' >support@looma.in</motion.p>
                 </div>
                 <div >
-                  <h1 className='text-6xl'>Find Us </h1>
-                  <div className='flex justify-start items-center gap-3 text-sm mt-3'>
-                    <FaInstagram />
-                    <PiFacebookLogo />
-                    <SiLinkedin />
-                  </div>
+                  <motion.h1 initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, delay: 0.2 }} className='text-6xl'>Find Us </motion.h1>
+                  <motion.div className='flex justify-start items-center gap-3 text-sm mt-3' initial="hidden" animate="visible" variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1 } } }}>
+                    <motion.div initial={{ y: -10, opacity: 0 }} animate={{ y: 0, opacity: 1 }}><FaInstagram /></motion.div>
+                    <motion.div initial={{ y: -10, opacity: 0 }} animate={{ y: 0, opacity: 1 }}><PiFacebookLogo /></motion.div>
+                    <motion.div initial={{ y: -10, opacity: 0 }} animate={{ y: 0, opacity: 1 }}><SiLinkedin /></motion.div>
+                  </motion.div>
                 </div>
               </div>
               <div className='px-10 mt-15'>
-                <h1 className='text-6xl'>Talk to Us</h1>
-                <p className='text-sm mt-3'>+910293490</p>
+                <motion.h1 initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, delay: 0.2 }} className='text-6xl'>Talk to Us</motion.h1>
+                <motion.p initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, delay: 0.3 }} className='text-sm mt-3'>+910293490</motion.p>
               </div>
             </div>
-            <div className=' mt-80 bottom-0 ps-25'>
+            <motion.div className=' mt-80 bottom-0 ps-25' initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8, delay: 0.5 }}>
               <CurvedLoop
                 marqueeText="BUILD CRAFT PROPEL Inspire "
                 speed={1}
@@ -88,9 +99,9 @@ function Contact() {
                 interactive={true}
                 className="custom-text-style"
               />
-            </div>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </ClickSpark>
   )

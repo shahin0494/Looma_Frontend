@@ -3,6 +3,7 @@ import Header from '../components/Header'
 import logo from '/logo22.jpg'
 import Footer from '../../component/Footer'
 import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion';
 
 function HireMe() {
   return (
@@ -26,7 +27,12 @@ function HireMe() {
       />
       <h1 className='text-9xl pt-20 text-neutral-500 font-semibold'>For You</h1>
       {/* job titles */}
-      <div className="bg-neutral-800 rounded-lg p-4 sm:p-8 text-white max-w-sm md:max-w-full mx-auto my-4 sm:my-8">
+      <motion.div 
+        className="bg-neutral-800 rounded-lg p-4 sm:p-8 text-white max-w-sm md:max-w-full mx-auto my-4 sm:my-8"
+        initial={{ opacity: 0, y: 10, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.6 }}
+      >
         <div className="flex flex-col md:flex-row justify-between items-start sm:items-center mb-4 sm:mb-0">
 
           <div className="flex items-center gap-3">
@@ -71,9 +77,14 @@ function HireMe() {
             <p className="text-base sm:text-lg">Bratislava, SK</p>
           </div>
         </div>
-      </div>
+      </motion.div>
       {/* job titles */}
-      <div className="bg-neutral-800 rounded-lg p-4 sm:p-8 text-white max-w-sm md:max-w-full mx-auto my-4 sm:my-8">
+      <motion.div 
+        className="bg-neutral-800 rounded-lg p-4 sm:p-8 text-white max-w-sm md:max-w-full mx-auto my-4 sm:my-8"
+        initial={{ opacity: 0, y: 10, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.6 }}
+      >
         <div className="flex flex-col md:flex-row justify-between items-start sm:items-center mb-4 sm:mb-0">
 
           <div className="flex items-center gap-3">
@@ -119,9 +130,14 @@ function HireMe() {
             <p className="text-base sm:text-lg">Bratislava, SK</p>
           </div>
         </div>
-      </div>
+      </motion.div>
       {/* job titles */}
-      <div className="bg-neutral-800 rounded-lg p-4 sm:p-8 text-white max-w-sm md:max-w-full mx-auto my-4 sm:my-8">
+      <motion.div 
+        className="bg-neutral-800 rounded-lg p-4 sm:p-8 text-white max-w-sm md:max-w-full mx-auto my-4 sm:my-8"
+        initial={{ opacity: 0, y: 10, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.6 }}
+      >
         <div className="flex flex-col md:flex-row justify-between items-start sm:items-center mb-4 sm:mb-0">
 
           <div className="flex items-center gap-3">
@@ -166,7 +182,7 @@ function HireMe() {
             <p className="text-base sm:text-lg">Bratislava, SK</p>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       <Footer />
     </div>

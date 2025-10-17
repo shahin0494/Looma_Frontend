@@ -10,6 +10,7 @@ import Footer from '../../component/Footer';
 import FlowingMenu from '../../reactbits/FlowingMenu'
 import logo from '/logo22.jpg'
 import ClickSpark from '../../reactbits/ClickSpark';
+import Header2 from '../components/Header2'
 
 function Home() {
   const containerRef = useRef(null);
@@ -32,6 +33,18 @@ function Home() {
     );
     if (visionRef.current) observer.observe(visionRef.current);
   }, []);
+
+  const menuItems = [
+  { label: 'Logout', ariaLabel: 'Go to home page', link: '/' },
+  { label: 'Profile', ariaLabel: 'Learn about us', link: '/profile' },
+];
+
+const socialItems = [
+  { label: 'Twitter', link: 'https://twitter.com' },
+  { label: 'GitHub', link: 'https://github.com' },
+  { label: 'LinkedIn', link: 'https://linkedin.com' }
+];
+
 
   return (
     <ClickSpark
@@ -67,6 +80,23 @@ function Home() {
             hoveredPillTextColor="#ffffff"
             pillTextColor="#4C0101"
           />
+          <div style={{ height: '100vh', position: 'absolute', top: 0, left: 0, width: '100%', zIndex: 50 }} className=''>
+            <Header2
+              position="right"
+              items={menuItems}
+              socialItems={socialItems}
+              displaySocials={true}
+              displayItemNumbering={true}
+              menuButtonColor="#000000"
+              openMenuButtonColor="#fffbeb"
+              changeMenuColorOnOpen={true}
+              colors={['#450a0a', '#fffbeb']}
+              //logoUrl="/logo22.jpg"
+              accentColor="#fffbeb"
+              onMenuOpen={() => console.log('Menu opened')}
+              onMenuClose={() => console.log('Menu closed')}
+            />
+</div>
           {/* section 1 */}
           <section className='grid grid-cols-1 md:grid-cols-2 justify-center md:h-screen  h-auto items-center gap-5 md:px-40 p-5'>
             <div className='flex items-center justify-between md:mt-[-80px]'>
@@ -94,8 +124,8 @@ function Home() {
             </div>
           </section>
           {/* section 2 */}
-          <section className='flex justify-center h-screen text-center bg-neutral-950 text-red-700/90 items-center gap-5 mb-0 md:px-40 p-5 py-16 md:py-24'>
-            <div className='text-justify   px-0'>
+          <section  className='flex justify-center h-screen text-center bg-neutral-950 text-red-700/90 items-center gap-5 mb-0 md:px-40 p-5 py-16 md:py-24'>
+            <div className='text-justify  px-0'>
               <ScrollReveal
                 baseOpacity={0}
                 enableBlur={true}
@@ -108,7 +138,7 @@ function Home() {
           </section>
           {/* section 3 */}
           <section className='flex-col bg-neutral-950 gap-5 mt-0 p-5'>
-            <h1 className='text-3xl sm:text-4xl md:text-8xl font-extrabold px-5 md:px-10 py-5 text-neutral-500 mt-5'>Our services</h1> <hr className='mt-6 md:mt-2 text-neutral-500 ms-5 md:ms-10 mr-15' />
+            <h1 className='text-3xl sm:text-4xl md:text-8xl font-extralight px-5 md:px-10 py-5 text-neutral-500 mt-5'>Our services</h1> <hr className='mt-6 md:mt-2 text-neutral-500 ms-5 md:ms-10 mr-15' />
             <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mt-10 px-5 md:px-10'>
               <SpotlightCard className="custom-spotlight-card" spotlightColor="rgba(255, 215, 0, 0.2)">
                 <div className="p-8 rounded-2xl  shadow-lg max-w-sm text-left">
