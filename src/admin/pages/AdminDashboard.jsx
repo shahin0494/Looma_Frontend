@@ -1,160 +1,207 @@
-import React from 'react'
-import Footer from '../../component/Footer'
+import { motion } from 'framer-motion';
+import { Clock, TrendingUp, Users, DollarSign, CheckCircle, AlertCircle, Activity, Briefcase, Zap, Smile, Star, ClipboardClock, StarHalf, Telescope, Baby } from 'lucide-react';
 import Header from '../components/FreelanceDashboardHeader'
 import logo from '/logo22.jpg'
-import { MdOutlinePending } from "react-icons/md";
-import { TbUrgent } from "react-icons/tb";
-import { TbComet } from "react-icons/tb";
-import { TbMoneybag } from "react-icons/tb";
-import { AiFillApi } from "react-icons/ai";
-import { SiStagetimer } from "react-icons/si";
-import { MdDone } from "react-icons/md";
-import { MdOutlineSentimentVerySatisfied } from "react-icons/md";
+import Footer from '../../component/Footer';
 
 
+  const menuItems = [
+    { label: 'Logout', ariaLabel: 'Go to home page', link: '/' },
+    { label: 'Profile', ariaLabel: 'Learn about us', link: '/profile' },
+  ];
 
+  const socialItems = [
+    { label: 'Twitter', link: 'https://twitter.com' },
+    { label: 'GitHub', link: 'https://github.com' },
+    { label: 'LinkedIn', link: 'https://linkedin.com' }
+  ];
 
-const AdminDashboard = () => {
+const StatCard = ({ title, value, icon, trend, delay = 0, gradient }) => {
   return (
-    <div className='bg-neutral-950'>
-      <div  className="w-full bg-red-900 rounded-b-4xl h-80 flex items-end px-9 py-5">
+
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.1 }}
+      whileHover={{ scale: 1.02, transition: { duration: 0.1 } }}
+      className={`relative overflow-hidden rounded-2xl hover:bg-gradient-to-br ${gradient} p-6 border border-white/10 hover:border-white/15 transition-all backdrop-blur-md`}
+    >
+
+
+
+      <div className="relative z-10">
+        <div className="flex items-center justify-between mb-3">
+          <div className="text-white/70 text-sm font-light tracking-wide">{title}</div>
+          <div className="text-white/80">{icon}</div>
+        </div>
+        <div className="text-4xl font-light text-white mb-1">{value}</div>
+        {trend && (
+          <div className="text-white/50  text-xs font-light mt-1">{trend}</div>
+        )}
+      </div>
+      <div className="absolute -right-6 -bottom-6 w-28 h-28 bg-white/5 rounded-full blur-2xl" />
+    </motion.div>
+  );
+};
+
+function Dashboard() {
+  const stats = [
+    {
+      title: 'Completed Projects',
+      value: 12,
+      icon: <Briefcase className="w-5 h-5 text-emerald-600" />,
+      trend: 'This month',
+      gradient: 'from--600/10 to-green-800/15'
+    },
+    {
+      title: 'Total Earnings',
+      value: '$15,420',
+      icon: <DollarSign className="w-5 h-5 text-amber-500" />,
+      trend: 'This month',
+      gradient: 'from--500/10 to-yellow-600/10'
+    },
+    {
+      title: 'Average Rating',
+      value: 4.8,
+      icon: <Star className="w-5 h-5 text-purple-500" />,
+      trend: 'Based on 12 reviews',
+      gradient: 'from--500/10 to-violet-700/15'
+    },
+    {
+      title: 'Active Applications',
+      value: 3,
+      icon: <Activity className="w-5 h-5 text-blue-500" />,
+      trend: 'This month',
+      gradient: 'from--500/10 to-indigo-700/15'
+    },
+    {
+      title: 'Pending Requests',
+      value: 3,
+      icon: <ClipboardClock className="w-5 h-5 text-red-700" />,
+      trend: 'This month',
+      gradient: 'from-500/10 to-red-700/10'
+    },
+    {
+      title: 'Visits',
+      value: "396",
+      icon: <Telescope className="w-5 h-5 text-teal-700" />,
+      trend: 'This month',
+      gradient: 'from-gold-500/10 to-teal-700/10'
+    },
+    {
+      title: 'Client Satisfaction',
+      value: "76%",
+      icon: <Smile className="w-5 h-5 text-amber-700" />,
+      trend: 'This month',
+      gradient: 'from-gold-500/10 to-amber-700/10'
+    }
+    ,
+    {
+      title: 'Completed Members',
+      value: "76%",
+      icon: <Baby className="w-5 h-5 text-lime-500" />,
+      trend: 'This month',
+      gradient: 'from-gold-500/10 to-lime-700/20'
+    }
+  ];
+
+  return (
+    <div className="min-h-screen bg-black text-white px-8 py-10">
+
+      <div className='flex items-end justify-end'>
         <Header
           logo={logo}
           logoAlt="Company Logo"
           items={[
-            { label: 'Home', href: '/' },
-            { label: 'Hire', href: '/Hire-me' },
-            { label: 'Dashboard', href: '/Dashboard' },
-            { label: 'Contact', href: '/Contact' },
-            { label: 'Login', href: '/Login' },
+            { label: 'Dashboard', href: '/admin-dashboard' },
+            { label: 'Settings', href: '/admin-settings' },
+            { label: 'Clients', href: '/admin-clients' },
+            { label: 'Portfolio', href: '/admin-portfolio' },
+            { label: 'Project', href: '/admin-projects' },
           ]}
-          activeHref="/"
+          activeHref="/admin-dashboard"
           className="custom-nav"
           ease="power2.easeOut"
-          baseColor="#000000"
-          pillColor="#FFFBEB"
+          baseColor="#171717"
+          pillColor="#262626"
           hoveredPillTextColor="#ffffff"
-          pillTextColor="#4C0101"
+          pillTextColor="#f5f5f5"
         />
-        <h1 style={{fontFamily:"Chillax"}} className="text-8xl font-light text-amber-50">
-          Dashboard
-        </h1>
+        {/* <div style={{ height: '100vh', position: 'absolute', top: -5, left: 0, width: '100%', zIndex: 50 }} className=''>
+          <Header2
+            position="right"
+            items={menuItems}
+            socialItems={socialItems}
+            displaySocials={true}
+            displayItemNumbering={true}
+            menuButtonColor="#fafafa"
+            openMenuButtonColor="#fffbeb"
+            changeMenuColorOnOpen={true}
+            colors={['#450a0a', '#fffbeb']}
+            //logoUrl="/logo22.jpg"
+            accentColor="#fffbeb"
+            onMenuOpen={() => console.log('Menu opened')}
+            onMenuClose={() => console.log('Menu closed')}
+          />
+        </div> */}
       </div>
 
-      <div className='h-auto bg-neutral-950  px-10 py-12'>
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.1 }}
+        className="mb-5 mt-15"
+      >
+        <h1 className="text-7xl ms-2 font-extralight text-neutral-400  tracking-tight mb-8">Admin Dashboard</h1>
+        <hr className="mt-5 text-neutral-800" />
+        {/* <p className="text-white/50 text-sm font-light">Welcome back! Here's what’s happening with your freelance work.</p> */}
+      </motion.div>
 
-        <div className='grid grid-cols-2'>
-          <div  className=' me-5 h-auto px-10 bg-neutral-800 font-extralight text-white rounded-xl py-5'>
-            <h1 style={{fontFamily:"Chillax"}} className='text-7xl text-neutral-300 py-5 font-light '>Overview</h1>
-            <div  className='grid grid-cols-2 gap-5'>
-              
-              <div  className='px-4  bg-yellow-500 rounded-xl'>
-                <div className='flex justify-between text-xl py-2'>
-                  <h1  className=''>Pending Requests</h1>
-                  <MdOutlinePending className='mt-1' />
-                </div>
-                <h3 className='text-6xl font-light pb-3'>10</h3>
-              </div>
-
-              <div className='px-4 bg-red-600 rounded-xl'>
-                <div className='flex justify-between text-xl py-2'>
-                  <h1 className=''>Urgent Requests</h1>
-                  <TbUrgent className='mt-1' />
-                </div>
-                <h3 className='text-6xl pb-3'>8</h3>
-              </div>
-              
-              <div className='px-4 bg-blue-600 rounded-xl'>
-                <div className='flex justify-between text-xl py-2'>
-                  <h1 className=''>Visits</h1>
-                  <TbComet className='mt-1' />
-                </div>
-                <h3 className='text-6xl pb-3'>130</h3>
-              </div>
-
-              <div className='px-4 bg-green-600 rounded-xl'>
-                <div className='flex justify-between text-xl py-2'>
-                  <h1 className=''>Total Earnings</h1>
-                  <TbMoneybag className='mt-1' />
-                </div>
-                <h3 className='text-6xl pb-3'>$2300</h3>
-              </div>
-
-              <div className='px-4 bg-indigo-600 rounded-xl'>
-                <div className='flex justify-between text-xl py-2'>
-                  <h1 className=''>Active Users</h1>
-                  <TbComet className='mt-1' />
-                </div>
-                <h3 className='text-6xl pb-3'>200</h3>
-              </div>
-
-              <div className='px-4 bg-emerald-600 rounded-xl'>
-                <div className='flex justify-between text-xl py-2'>
-                  <h1 className=''>Pending Invoices</h1>
-                  <TbMoneybag className='mt-1' />
-                </div>
-                <h3 className='text-6xl pb-3'>23</h3>
-              </div>
-
-              <div></div>
-            </div>
-          </div>
-          <div className=' me-5 h-auto px-10 bg-neutral-800 font-extralight text-white rounded-xl py-5'>
-            <h1 style={{fontFamily:"Chillax"}} className='text-7xl py-5 font-light text-neutral-300   '>Projects</h1>
-            <div className='grid grid-cols-2 gap-5'>
-              
-              <div className='px-4  bg-neutral-900 rounded-xl'>
-                <h3 className='text-6xl text-white font-light pt-11'>10</h3>
-              </div>
-
-              <div className='px-4 bg-orange-600 rounded-xl'>
-                <div className='flex justify-between text-xl py-2'>
-                  <h1 className=''>Response </h1>
-                  <AiFillApi className='mt-1' />
-                </div>
-                <h3 className='text-6xl pb-3'>Off</h3>
-              </div>
-              
-              <div className='px-4 bg-purple-600 rounded-xl'>
-                <div className='flex justify-between text-xl py-2'>
-                  <h1 className='text-white'>Ongoing Projects</h1>
-                  <TbComet className='mt-1' />
-                </div>
-                <h3 className='text-6xl text-white pb-3'>13</h3>
-              </div>
-
-              <div className='px-4 bg-teal-600 rounded-xl'>
-                <div className='flex justify-between text-xl py-2'>
-                  <h1 className=''>Response Time</h1>
-                  <SiStagetimer className='mt-1' />
-                </div>
-                <h3 className='text-6xl pb-3'>2h 30m</h3>
-              </div>
-              <div className='px-4 bg-cyan-600 rounded-xl'>
-                <div className='flex justify-between text-xl py-2'>
-                  <h1 className='text-white'>Completed Members</h1>
-                  <MdDone className='mt-1' />
-                </div>
-                <h3 className='text-6xl text-white pb-3'>50</h3>
-              </div>
-
-              <div className='px-4 bg-emerald-600 rounded-xl'>
-                <div className='flex justify-between text-xl py-2'>
-                  <h1 className=''>Client Satisfaction</h1>
-                  <MdOutlineSentimentVerySatisfied className='mt-1' />
-                </div>
-                <h3 className='text-6xl pb-3'>76%</h3>
-              </div>
-
-              <div></div>
-            </div>
-          </div>
-          
-        </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+        {stats.map((stat, index) => (
+          <StatCard key={stat.title} {...stat} delay={0.4 * index} />
+        ))}
       </div>
-<Footer />
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.6 }}
+        className="grid grid-cols-1 md:grid-cols-2 gap-6"
+      >
+        {/* Quick Actions
+        <div className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-md">
+          <h2 className="text-lg font-light mb-4 text-white/90">Quick Actions</h2>
+          <div className="grid grid-cols-2 gap-4">
+            <button className="bg-white/10 hover:bg-white/20 transition-all rounded-xl py-3 text-sm text-white/80 font-light">Update Portfolio</button>
+            <button className="bg-white/10 hover:bg-white/20 transition-all rounded-xl py-3 text-sm text-white/80 font-light">Browse Jobs</button>
+            <button className="bg-white/10 hover:bg-white/20 transition-all rounded-xl py-3 text-sm text-white/80 font-light">Edit Profile</button>
+            <button className="bg-white/10 hover:bg-white/20 transition-all rounded-xl py-3 text-sm text-white/80 font-light">Set Availability</button>
+          </div>
+        </div> */}
+
+        {/* Notifications
+        <div className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-md">
+          <h2 className="text-lg font-light mb-4 text-white/90">Notifications</h2>
+          <div className="space-y-3">
+            <div className="flex items-center justify-between bg-white/10 hover:bg-white/15 transition-all rounded-xl p-3">
+              <p className="text-sm text-white/80">Project Completed</p>
+              <span className="text-xs text-emerald-400">2h ago</span>
+            </div>
+            <div className="flex items-center justify-between bg-white/10 hover:bg-white/15 transition-all rounded-xl p-3">
+              <p className="text-sm text-white/80">Payment Due</p>
+              <span className="text-xs text-amber-400">3 days left</span>
+            </div>
+            <div className="flex items-center justify-between bg-white/10 hover:bg-white/15 transition-all rounded-xl p-3">
+              <p className="text-sm text-white/80">New Message from Client</p>
+              <span className="text-xs text-blue-400">Just now</span>
+            </div>
+          </div>
+        </div> */}
+      </motion.div>
+      <Footer />
     </div>
-  )
+  );
 }
 
-export default AdminDashboard
+export default Dashboard;

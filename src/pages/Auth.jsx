@@ -53,7 +53,7 @@ function Auth({ register = false }) {
         hoverFillColor="rgba(255, 255, 255, 0.02)"
       >
         {/* Background gradient overlay */}
-        {/* <div className="absolute inset-0 bg-gradient-to-br from-neutral-950 via-neutral-900 to-red-950/20"></div> */}
+        <div className="absolute inset-0 bg-gradient-to-br from-neutral-950 via-neutral-900 to-red-950/20"></div>
 
         {/* Main content */}
         <div className="relative z-10 flex items-center justify-center min-h-screen p-4">

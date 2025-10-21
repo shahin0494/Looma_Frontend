@@ -35,15 +35,15 @@ function Home() {
   }, []);
 
   const menuItems = [
-  { label: 'Logout', ariaLabel: 'Go to home page', link: '/' },
-  { label: 'Profile', ariaLabel: 'Learn about us', link: '/profile' },
-];
+    { label: 'Logout', ariaLabel: 'Go to home page', link: '/' },
+    { label: 'Profile', ariaLabel: 'Learn about us', link: '/profile' },
+  ];
 
-const socialItems = [
-  { label: 'Twitter', link: 'https://twitter.com' },
-  { label: 'GitHub', link: 'https://github.com' },
-  { label: 'LinkedIn', link: 'https://linkedin.com' }
-];
+  const socialItems = [
+    { label: 'Twitter', link: 'https://twitter.com' },
+    { label: 'GitHub', link: 'https://github.com' },
+    { label: 'LinkedIn', link: 'https://linkedin.com' }
+  ];
 
 
   return (
@@ -53,13 +53,13 @@ const socialItems = [
       sparkRadius={15}
       sparkCount={8}
       duration={400}>
-      <div className='bg-amber-50'>
+      <div className='bg-slate-300'>
         <Squares
           className='w-full h-screen'
           speed={0.4}
           squareSize={100}
-          direction='diagonal'
-          borderColor='rgba(71, 10, 31,0.1)'
+          direction='right'
+          borderColor='rgba(71, 10, 31,0)'
           hoverFillColor='#ffffff'
         >
           <Header
@@ -96,41 +96,57 @@ const socialItems = [
               onMenuOpen={() => console.log('Menu opened')}
               onMenuClose={() => console.log('Menu closed')}
             />
-</div>
-          {/* section 1 */}
-          <section className='grid grid-cols-1 md:grid-cols-2 justify-center md:h-screen  h-auto items-center gap-5 md:px-40 p-5'>
-            <div className='flex items-center justify-between md:mt-[-80px]'>
-              <h3 className=' text-4xl sm:text-5xl md:text-7xl lg:text-8xl py-10 md:py-0 text-neutral-900 flex-col font-bold'>
-                Your <br />
-                <span ref={visionRef} className='text-red-800 mb-3 mt-3  underline-reveal relative inline-block group'>
-                  Vision
-                </span><br />
-                reimagined
-              </h3>
-              <div className='hidden md:block'>
-                <div className='pointer-events-auto items-center md:ms-50'>
-                  <MagnetLines
-                    rows={6}
-                    columns={6}
-                    containerSize="60vmin"
-                    lineColor="rgb(71, 10, 31)"
-                    lineWidth="0.8vmin"
-                    lineHeight="5vmin"
-                    baseAngle={0}
-                    style={{ margin: '2rem auto' }}
-                  />
+          </div>
+          {/* section 1 with video background */}
+          <section className="relative h-screen flex items-center justify-center overflow-hidden">
+            {/* Background Video */}
+            <video
+              className="absolute top-0 left-0 w-full   h-full object-cover"
+              src="bgvid4.mov"
+              autoPlay
+              loop
+              muted
+              playsInline
+            />
+
+
+
+            {/* Content on top of video */}
+            <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-5 md:px-40 p-5">
+              <div className='flex items-center justify-between md:mt-[-80px]'>
+                <h3 id='vision' className='text-4xl sm:text-5xl md:text-7xl lg:text-8xl py-10 md:py-0 text-neutral-500 flex-col font-extralight'>
+                  Your <br />
+
+                  <span id='vision'  className='text-red-900 '>Vision</span>
+                  <br />
+                  reimagined
+                </h3>
+                <div className='hidden md:block'>
+                  <div className='pointer-events-auto items-center md:ms-100'>
+                    <MagnetLines
+                      rows={6}
+                      columns={6}
+                      containerSize="60vmin"
+                      lineColor="#9f0712"
+                      lineWidth="0.2vmin"
+                      lineHeight="3vmin"
+                      baseAngle={0}
+                      style={{ margin: '2rem auto' }}
+                    />
+                  </div>
                 </div>
               </div>
             </div>
           </section>
           {/* section 2 */}
-          <section  className='flex justify-center h-screen text-center bg-neutral-950 text-red-700/90 items-center gap-5 mb-0 md:px-40 p-5 py-16 md:py-24'>
-            <div className='text-justify  px-0'>
+          <section className='flex justify-center h-screen text-center bg-neutral-950 text-red-700/90 items-center gap-5 mb-0 md:px-40 p-5 py-16 md:py-24'>
+            <div className='text-justify px-0'>
               <ScrollReveal
                 baseOpacity={0}
                 enableBlur={true}
                 baseRotation={0}
                 blurStrength={10}
+
               >
                 This website is a refined portfolio platform that highlights your creative work with clarity and impact, featuring interactive visuals and seamless navigation for a professional presentation.
               </ScrollReveal>
@@ -138,7 +154,7 @@ const socialItems = [
           </section>
           {/* section 3 */}
           <section className='flex-col bg-neutral-950 gap-5 mt-0 p-5'>
-            <h1 className='text-3xl sm:text-4xl md:text-8xl font-extralight px-5 md:px-10 py-5 text-neutral-500 mt-5'>Our services</h1> <hr className='mt-6 md:mt-2 text-neutral-500 ms-5 md:ms-10 mr-15' />
+            <h1 className='text-3xl sm:text-4xl md:text-8xl  font-extralight px-5 md:px-10 py-5 text-neutral-200 mt-5'>Our services</h1> <hr className='mt-6 md:mt-2 text-neutral-500 ms-5 md:ms-10 mr-15' />
             <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mt-10 px-5 md:px-10'>
               <SpotlightCard className="custom-spotlight-card" spotlightColor="rgba(255, 215, 0, 0.2)">
                 <div className="p-8 rounded-2xl  shadow-lg max-w-sm text-left">
