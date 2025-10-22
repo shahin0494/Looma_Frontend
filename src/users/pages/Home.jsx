@@ -10,7 +10,6 @@ import Footer from '../../component/Footer';
 import FlowingMenu from '../../reactbits/FlowingMenu'
 import logo from '/logo22.jpg'
 import ClickSpark from '../../reactbits/ClickSpark';
-import Header2 from '../components/Header2'
 
 function Home() {
   const containerRef = useRef(null);
@@ -53,7 +52,7 @@ function Home() {
       sparkRadius={15}
       sparkCount={8}
       duration={400}>
-      <div className='bg-slate-300'>
+      <div className='bg-neutral-950'>
         <Squares
           className='w-full h-screen'
           speed={0.4}
@@ -80,67 +79,53 @@ function Home() {
             hoveredPillTextColor="#ffffff"
             pillTextColor="#4C0101"
           />
-          <div style={{ height: '100vh', position: 'absolute', top: 0, left: 0, width: '100%', zIndex: 50 }} className=''>
-            <Header2
-              position="right"
-              items={menuItems}
-              socialItems={socialItems}
-              displaySocials={true}
-              displayItemNumbering={true}
-              menuButtonColor="#000000"
-              openMenuButtonColor="#fffbeb"
-              changeMenuColorOnOpen={true}
-              colors={['#450a0a', '#fffbeb']}
-              //logoUrl="/logo22.jpg"
-              accentColor="#fffbeb"
-              onMenuOpen={() => console.log('Menu opened')}
-              onMenuClose={() => console.log('Menu closed')}
-            />
-          </div>
-          {/* section 1 with video background */}
-          <section className="relative h-screen flex items-center justify-center overflow-hidden">
-            {/* Background Video */}
-            <video
-              className="absolute top-0 left-0 w-full   h-full object-cover"
-              src="bgvid4.mov"
-              autoPlay
-              loop
-              muted
-              playsInline
-            />
+          {/* section 1 redesigned */}
+          <section className="relative h-screen flex items-center justify-center bg-neutral-950 overflow-hidden">
+            
+          <div className="absolute w-[20rem] left-90 mt-20 h-[20rem] rounded-full blur-3xl opacity-40 "
+     style={{
+       background: 'conic-gradient(red, red, black, indigo, violet)'
+     }}>
+</div>
 
-
-
-            {/* Content on top of video */}
-            <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 justify-center items-center gap-5 md:px-40 p-5">
-              <div className='flex items-center justify-between md:mt-[-80px]'>
-                <h3 id='vision' className='text-4xl sm:text-5xl md:text-7xl lg:text-8xl py-10 md:py-0 text-neutral-500 flex-col font-extralight'>
-                  Your <br />
-
-                  <span id='vision'  className='text-red-900 '>Vision</span>
-                  <br />
-                  reimagined
-                </h3>
-                <div className='hidden md:block'>
-                  <div className='pointer-events-auto items-center md:ms-100'>
-                    <MagnetLines
-                      rows={6}
-                      columns={6}
-                      containerSize="60vmin"
-                      lineColor="#9f0712"
-                      lineWidth="0.2vmin"
-                      lineHeight="3vmin"
-                      baseAngle={0}
-                      style={{ margin: '2rem auto' }}
-                    />
-                  </div>
+            {/* content */}
+            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between w-full max-w-7xl px-6 md:px-16">
+              <div className="text-center font-extralight md:text-left space-y-6">
+                <h1 className="text-5xl sm:text-6xl md:text-8xl font-extralight text-neutral-100 leading-tight">
+                  Your <span className="text-red-700 font-extralight">Vision</span><br />Reimagined
+                </h1>
+                <p className="text-neutral-400 text-base md:text-lg max-w-md mx-auto md:mx-0">
+                  Transforming ideas into timeless digital experiences with clarity, precision, and creative depth.
+                </p>
+                <div className="flex justify-center md:justify-start mt-4">
+                  <a
+                    href="/hire-me"
+                    className="px-6 py-3 rounded-full bg-red-800 text-neutral-100 hover:bg-red-700 transition-all duration-300"
+                  >
+                    Get Started
+                  </a>
                 </div>
+              </div>
+
+              <div className="hidden md:flex justify-center items-center">
+                <MagnetLines
+                  rows={6}
+                  columns={6}
+                  containerSize="55vmin"
+                  lineColor="#9f0712"
+                  lineWidth="0.4vmin"
+                  lineHeight="3vmin"
+                  baseAngle={0}
+                  style={{ margin: '2rem auto' }}
+                />
               </div>
             </div>
           </section>
+          
           {/* section 2 */}
           <section className='flex justify-center h-screen text-center bg-neutral-950 text-red-700/90 items-center gap-5 mb-0 md:px-40 p-5 py-16 md:py-24'>
             <div className='text-justify px-0'>
+              
               <ScrollReveal
                 baseOpacity={0}
                 enableBlur={true}

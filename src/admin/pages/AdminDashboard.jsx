@@ -2,11 +2,11 @@ import { motion } from 'framer-motion';
 import Dock from '../components/FreelanceDashboardHeader'
 import Footer from '../../component/Footer';
 import { useNavigate } from 'react-router-dom';
-import { DollarSign, Activity, Briefcase,  Smile, Star, ClipboardClock, Telescope, Baby, UserRound, Ratio, SquareChartGantt, House, Wrench } from 'lucide-react';
+import { DollarSign, Activity, Briefcase, Smile, Star, ClipboardClock, Telescope, Baby, UserRound, Ratio, SquareChartGantt, House, Wrench } from 'lucide-react';
 
 
 
-  
+
 
 const StatCard = ({ title, value, icon, trend, delay = 0, gradient }) => {
   return (
@@ -111,12 +111,12 @@ function Dashboard() {
   return (
     <div className="min-h-screen bg-black text-white px-8">
 
-      <Dock 
-    items={items}
-    panelHeight={68}
-    baseItemSize={50}
-    magnification={70}
-  />
+      <Dock
+        items={items}
+        panelHeight={68}
+        baseItemSize={50}
+        magnification={70}
+      />
 
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -124,9 +124,9 @@ function Dashboard() {
         transition={{ duration: 0.1 }}
         className="mb-5 mt-3"
       >
-        
-          <h1 className="text-6xl ms-2  font-extralight text-neutral-200 py-3 px-2 tracking-tight ">Admin Dashboard</h1>
-        
+
+        <h1 className="text-6xl ms-2  font-extralight text-neutral-200 py-3 px-2 tracking-tight ">Admin Dashboard</h1>
+
         <hr className="mt-5 text-neutral-800" />
         {/* <p className="text-white/50 text-sm font-light">Welcome back! Here's what’s happening with your freelance work.</p> */}
       </motion.div>
