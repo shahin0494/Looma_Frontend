@@ -1,20 +1,12 @@
 import { motion } from 'framer-motion';
-import { Clock, TrendingUp, Users, DollarSign, CheckCircle, AlertCircle, Activity, Briefcase, Zap, Smile, Star, ClipboardClock, StarHalf, Telescope, Baby } from 'lucide-react';
-import Header from '../components/FreelanceDashboardHeader'
-import logo from '/logo22.jpg'
+import Dock from '../components/FreelanceDashboardHeader'
 import Footer from '../../component/Footer';
+import { useNavigate } from 'react-router-dom';
+import { DollarSign, Activity, Briefcase,  Smile, Star, ClipboardClock, Telescope, Baby, UserRound, Ratio, SquareChartGantt, House, Wrench } from 'lucide-react';
 
 
-  const menuItems = [
-    { label: 'Logout', ariaLabel: 'Go to home page', link: '/' },
-    { label: 'Profile', ariaLabel: 'Learn about us', link: '/profile' },
-  ];
 
-  const socialItems = [
-    { label: 'Twitter', link: 'https://twitter.com' },
-    { label: 'GitHub', link: 'https://github.com' },
-    { label: 'LinkedIn', link: 'https://linkedin.com' }
-  ];
+  
 
 const StatCard = ({ title, value, icon, trend, delay = 0, gradient }) => {
   return (
@@ -45,6 +37,17 @@ const StatCard = ({ title, value, icon, trend, delay = 0, gradient }) => {
 };
 
 function Dashboard() {
+
+  const navigate = useNavigate();
+  const items = [
+    { icon: <House size={18} color='#BEF264' />, label: 'Dashboard', onClick: () => navigate('/admin-dashboard') },
+    { icon: <UserRound size={18} color='#A3A3A3' />, label: 'Clients', onClick: () => navigate('/admin-clients') },
+    { icon: <Ratio size={18} color='#A3A3A3' />, label: 'Portfolio', onClick: () => navigate('/admin-portfolio') },
+    { icon: <SquareChartGantt size={18} color='#A3A3A3' />, label: 'Projects', onClick: () => navigate('/admin-projects') },
+    { icon: <Wrench size={18} color='#A3A3A3' />, label: 'Settings', onClick: () => navigate('/admin-settings') },
+  ];
+
+
   const stats = [
     {
       title: 'Completed Projects',
@@ -106,57 +109,29 @@ function Dashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white px-8 py-10">
+    <div className="min-h-screen bg-black text-white px-8">
 
-      <div className='flex items-end justify-end'>
-        <Header
-          logo={logo}
-          logoAlt="Company Logo"
-          items={[
-            { label: 'Dashboard', href: '/admin-dashboard' },
-            { label: 'Settings', href: '/admin-settings' },
-            { label: 'Clients', href: '/admin-clients' },
-            { label: 'Portfolio', href: '/admin-portfolio' },
-            { label: 'Project', href: '/admin-projects' },
-          ]}
-          activeHref="/admin-dashboard"
-          className="custom-nav"
-          ease="power2.easeOut"
-          baseColor="#171717"
-          pillColor="#262626"
-          hoveredPillTextColor="#ffffff"
-          pillTextColor="#f5f5f5"
-        />
-        {/* <div style={{ height: '100vh', position: 'absolute', top: -5, left: 0, width: '100%', zIndex: 50 }} className=''>
-          <Header2
-            position="right"
-            items={menuItems}
-            socialItems={socialItems}
-            displaySocials={true}
-            displayItemNumbering={true}
-            menuButtonColor="#fafafa"
-            openMenuButtonColor="#fffbeb"
-            changeMenuColorOnOpen={true}
-            colors={['#450a0a', '#fffbeb']}
-            //logoUrl="/logo22.jpg"
-            accentColor="#fffbeb"
-            onMenuOpen={() => console.log('Menu opened')}
-            onMenuClose={() => console.log('Menu closed')}
-          />
-        </div> */}
-      </div>
+      <Dock 
+    items={items}
+    panelHeight={68}
+    baseItemSize={50}
+    magnification={70}
+  />
 
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.1 }}
-        className="mb-5 mt-15"
+        className="mb-5 mt-3"
       >
-        <h1 className="text-7xl ms-2 font-extralight text-neutral-400  tracking-tight mb-8">Admin Dashboard</h1>
+        
+          <h1 className="text-6xl ms-2  font-extralight text-neutral-200 py-3 px-2 tracking-tight ">Admin Dashboard</h1>
+        
         <hr className="mt-5 text-neutral-800" />
         {/* <p className="text-white/50 text-sm font-light">Welcome back! Here's what’s happening with your freelance work.</p> */}
       </motion.div>
 
+      {/* cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
         {stats.map((stat, index) => (
           <StatCard key={stat.title} {...stat} delay={0.4 * index} />
