@@ -32,26 +32,6 @@ function Auth({ register = false }) {
 
   return (
     <div style={{ height: "110vh" }} className="min-h-screen bg-neutral-950 overflow-hidden relative">
-      {/* 🔸 Background video */}
-
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute top-0 left-0 w-full h-full object-cover z-0"
-      >
-        <source src="/bg5.mp4" type="video/mp4" />
-      </video>
-
-      <Squares
-        className=""
-        speed={0.3}
-        squareSize={80}
-        direction="diagonal"
-        borderColor="#f0f0f0"
-        hoverFillColor="rgba(255, 255, 255, 0.02)"
-      >
         {/* Background gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-br from-neutral-950 via-neutral-900 to-red-950/20"></div>
 
@@ -167,7 +147,7 @@ function Auth({ register = false }) {
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-neutral-700/50 border border-neutral-600/50 rounded-lg text-neutral-100 placeholder-neutral-200 focus:outline-none focus:ring-2 focus:ring-red-800/50 focus:border-red-700/50 transition-all duration-200 backdrop-blur-sm"
+                      className="w-full px-4 py-3 bg-neutral-700/50 border border-neutral-600/50 rounded-lg text-neutral-100 placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-red-800/50 focus:border-red-700/50 transition-all duration-200 backdrop-blur-sm"
                       placeholder="Enter your email"
                       required
                     />
@@ -321,7 +301,7 @@ function Auth({ register = false }) {
             </motion.div>
           </motion.div>
         </div>
-      </Squares>
+      
     </div>
   )
 }
