@@ -116,9 +116,9 @@ function Auth({ register = false }) {
 
         setTimeout(() => {
           if (result.data.user.role === "freelancer") {
-            navigate("/freelancer-dashboard")
+            navigate("/")
           } else if (result.data.user.role === "user") {
-            navigate("/client-dashboard")
+            navigate("/")
           } else {
             navigate("/")
           }

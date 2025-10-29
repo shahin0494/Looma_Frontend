@@ -1,5 +1,5 @@
 // src/users/pages/Home.jsx
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRef } from 'react';
 import Header from '../components/Header'
 import Squares from '../../reactbits/Squares';
@@ -13,6 +13,7 @@ import ClickSpark from '../../reactbits/ClickSpark';
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Spline from '@splinetool/react-spline';
+import { useNavigate } from 'react-router-dom';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -26,6 +27,33 @@ function splitWords(text) {
 }
 
 function Home() {
+
+  const [listStatus, setListStatus] = useState(false)
+  const [token, setToken] = useState("")
+  const [userDp, setUserDp] = useState("")
+  const [dropDownStatus, setDropDownStatus] = useState(false)
+  const navigate = useNavigate()
+  // const {userEditResponse, setUserEditResponse} = useContext(userUpdateContext)
+
+  useEffect(() => {
+    if (sessionStorage.getItem("token")) {
+      const token = sessionStorage.getItem("token")
+      setToken(token)
+
+      const user = JSON.parse(sessionStorage.getItem("user"))
+
+      setUserDp(user.profile)
+    }
+  },[token])
+
+  const logout = () => {
+    sessionStorage.clear()
+    setToken("")
+    setUserDp("")
+    setDropDownStatus(false)
+    navigate("/")
+  }
+
   const containerRef = useRef(null);
 
   const demoItems = [
@@ -129,6 +157,20 @@ function Home() {
     { label: 'LinkedIn', link: 'https://linkedin.com' }
   ];
 
+  // const token = sessionStorage.getItem("token") || localStorage.getItem("token");
+
+// Base items (always visible)
+const baseItems = [
+  { label: 'Home', href: '/' },
+  { label: 'Hire', href: '/Hire-me' },
+  { label: 'Dashboard', href: '/Dashboard' },
+  { label: 'Contact', href: '/Contact' },
+];
+
+// Add login only if no token
+const items = token
+  ? [...baseItems , { label: 'Profile', href: '/profile' } ] // user logged in
+  : [...baseItems, { label: 'Login', href: '/Login' }]; // user logged out
 
   return (
     <ClickSpark
@@ -139,24 +181,21 @@ function Home() {
       duration={400}>
       <div className='bg-gray-300/40'>
 
-        <Header
-          logo={logo}
-          logoAlt="Company Logo"
-          items={[
-            { label: 'Home', href: '/' },
-            { label: 'Hire', href: '/Hire-me' },
-            { label: 'Dashboard', href: '/Dashboard' },
-            { label: 'Contact', href: '/Contact' },
-            { label: 'Login', href: '/Login' },
-          ]}
-          activeHref="/"
-          className="custom-nav"
-          ease="power2.easeOut"
-          baseColor="#000000"
-          pillColor="#ffffff"
-          hoveredPillTextColor="#ffffff"
-          pillTextColor="#000000"
-        />
+        <div className='flex justify-end items-center'>
+          <Header
+            //logo={logo}
+            logoAlt="Company Logo"
+            items={items}
+            activeHref="/"
+            className="custom-nav"
+            ease="power2.easeOut"
+            baseColor="#000000"
+            pillColor="#ffffff"
+            hoveredPillTextColor="#ffffff"
+            pillTextColor="#000000"
+          />
+          {token? <button onClick={logout} className='px-4 py-1.5 mt-4 me-5 bg-white hover:bg-black  text-black hover:text-white hover:border-white border-black border-2 rounded-4xl font-bold '>LOGOUT</button> : ""}
+        </div> {token?<hr className='mt-5'  /> : <hr className='mt-20'  /> }
         {/* section 1 redesigned */}
         <section className="relative h-screen flex flex-col md:flex-row items-center justify-center  overflow-hidden px-6 md:px-16">
 
@@ -227,8 +266,8 @@ function Home() {
           </div>
 
           <div style={{
-                backgroundImage: `url('./ww1.jpg')`,
-              }} className="w-full flex flex-col justify-between border border-neutral-200 rounded-md md:py-65  bg-neutral-100 bg-no-repeat  inset-0 bg-cover bg-center">
+            backgroundImage: `url('./ww1.jpg')`,
+          }} className="w-full flex flex-col justify-between border border-neutral-200 rounded-md md:py-65  bg-neutral-100 bg-no-repeat  inset-0 bg-cover bg-center">
             {/* Navigation */}
             {/* Main Content */}
             <div
