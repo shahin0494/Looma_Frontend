@@ -179,7 +179,7 @@ const items = token
       sparkRadius={15}
       sparkCount={8}
       duration={400}>
-      <div className='bg-gray-300/40'>
+      <div className='bg-neutral-950'>
 
         <div className='flex justify-end items-center'>
           <Header

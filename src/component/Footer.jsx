@@ -4,7 +4,7 @@ import { FaLinkedinIn, FaInstagram, FaFacebookF } from "react-icons/fa";
 function Footer() {
   return (
     <>
-      <footer style={{marginTop:"-20px"}} className="bg-neutral-100 text-black px-10 md:px-20 py-40 flex flex-col md:flex-row justify-between items-start md:items-center gap-10">
+      <footer style={{marginTop:"-20px"}} className="bg-neutral-950 text-white px-10 md:px-20 py-40 flex flex-col md:flex-row justify-between items-start md:items-center gap-10">
         {/* Left section */}
         <div className="space-y-3">
           <div className="flex items-center gap-3">

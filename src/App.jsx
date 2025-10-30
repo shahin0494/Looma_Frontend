@@ -13,6 +13,7 @@ import PortfolioAdmin from './admin/pages/PortfolioAdmin'
 import ProjectAdmin from './admin/pages/ProjectAdmin'
 import SettingsAdmin from './admin/pages/SettingsAdmin'
 import Pnf from './pages/Pnf'
+import AddJob from './users/pages/addJob'
 
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
         <Route path='/portfolio/:id/view' element={<Portfolio />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='/contact' element={<Contact />} />
+        <Route path='/add-job' element={<AddJob />} />
 
         {/* Admin Routes */}
         <Route path='/admin-dashboard' element={<AdminDashboard />} />
