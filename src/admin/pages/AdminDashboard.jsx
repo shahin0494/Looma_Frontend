@@ -16,13 +16,13 @@ const StatCard = ({ title, value, icon, trend, delay = 0, gradient }) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.1 }}
       whileHover={{ scale: 1.02, transition: { duration: 0.1 } }}
-      className={`relative overflow-hidden rounded-2xl hover:bg-gradient-to-br ${gradient} p-6 border border-white/10 hover:border-white/15 transition-all backdrop-blur-md`}
+      className={`  rounded-2xl hover:bg-gradient-to-br ${gradient} p-6 border border-white/10 hover:border-white/15 transition-all duration-500 backdrop-blur-md`}
     >
 
 
 
-      <div className="relative z-10">
-        <div className="flex items-center justify-between mb-3">
+      <div className="relative z-10 ">
+        <div className="flex items-center justify-between  mb-3">
           <div className="text-white/70 text-sm font-light tracking-wide">{title}</div>
           <div className="text-white/80">{icon}</div>
         </div>

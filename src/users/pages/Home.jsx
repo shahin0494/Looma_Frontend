@@ -179,7 +179,7 @@ const items = token
       sparkRadius={15}
       sparkCount={8}
       duration={400}>
-      <div className='bg-neutral-950'>
+      <div className='bg-neutral-50'>
 
         <div className='flex justify-end items-center'>
           <Header
@@ -194,7 +194,7 @@ const items = token
             hoveredPillTextColor="#ffffff"
             pillTextColor="#000000"
           />
-          {token? <button onClick={logout} className='px-4 py-1.5 mt-4 me-5 bg-white hover:bg-black  text-black hover:text-white hover:border-white border-black border-2 rounded-4xl font-bold '>LOGOUT</button> : ""}
+          {token? <button onClick={logout} className='px-4 py-1.5 mt-4 me-5 bg-white hover:bg-black  text-black hover:text-white hover:border-red-600 border-black border-2 rounded-4xl font-bold transition-all duration-200 '>LOGOUT</button> : ""}
         </div> {token?<hr className='mt-5'  /> : <hr className='mt-20'  /> }
         {/* section 1 redesigned */}
         <section className="relative h-screen flex flex-col md:flex-row items-center justify-center  overflow-hidden px-6 md:px-16">
