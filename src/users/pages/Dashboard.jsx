@@ -1,5 +1,5 @@
 // src/users/pages/Dashboard.jsx
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import Header from '../components/Header'
@@ -23,6 +23,39 @@ import {
 import Squares from '../../reactbits/Squares'
 
 const Dashboard = () => {
+
+
+const [token, setToken] = useState("")
+
+  useEffect(() => {
+    if (sessionStorage.getItem("token")) {
+      const token = sessionStorage.getItem("token")
+      setToken(token)
+    }
+  }, [])
+
+
+  const baseItems = [
+    { label: 'Home', href: '/' },
+    { label: 'Hire', href: '/Hire-me' },
+    { label: 'Dashboard', href: '/Dashboard' },
+    { label: 'Contact', href: '/Contact' },
+  ];
+
+  const items = token
+    ? [...baseItems, { label: 'Profile', href: '/profile' }] // user logged in
+    : [...baseItems, { label: 'Login', href: '/Login' }]; // user logged out
+
+
+  const logout = () => {
+    sessionStorage.clear()
+    setToken("")
+    setUserDp("")
+    setDropDownStatus(false)
+    navigate("/")
+  }
+
+  
   // This would come from your authentication context
   const userType = 'freelancer' // Change to 'client' to see client dashboard
   
@@ -110,23 +143,27 @@ const Dashboard = () => {
         borderColor="rgba(71, 10, 31, 0.03)"
         hoverFillColor="rgba(255, 255, 255, 0.01)"
       >
+    <div className='bg-neutral-950'>
         <Header
-          logo={logo}
-        logoAlt="Company Logo"
-        items={[
-          { label: 'Home', href: '/' },
-            { label: 'Hire', href: '/Hire-me' },
-            { label: 'Dashboard', href: '/Dashboard' },
-            { label: 'Contact', href: '/Contact' },
-        ]}
-        activeHref="/Dashboard"
-        className="custom-nav"
-        ease="power2.easeOut"
-        baseColor="#1A1A1A"
-        pillColor="#2E2E2E "
-        hoveredPillTextColor="#ffffff"
-        pillTextColor="#D3D3D3"
+          logoAlt="Company Logo"
+          items={items}
+          activeHref="/Dashboard"
+          className="custom-nav"
+          ease="power2.easeOut"
+          baseColor="#000000"
+          pillColor="#fb3c01"
+          hoveredPillTextColor="#fb3c01"
+          pillTextColor="#ffffff"
         />
+        {token && (
+          <button
+            onClick={logout}
+            className='px-4 py-1.5 z-50 mt-4 bg-black ms-385 text-orange-600 hover:bg-orange-600/20 border-orange-600 border-2 rounded-4xl font-bold transition-all duration-200'
+          >
+            LOGOUT
+          </button>
+        )}
+      </div>
 
         <div className="relative z-10 pt-20 pb-10 px-4 md:px-8 lg:px-16">
           <div className="max-w-7xl mx-auto">

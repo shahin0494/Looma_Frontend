@@ -31,7 +31,7 @@
   text-decoration: none;
   white-space: nowrap;
   font-weight: 600;
-  color: #fff;
+  color: #fb3c01;
   font-size: 4vh;
 }
 
@@ -48,17 +48,17 @@
   top: 0;
   left: 0;
   overflow: hidden;
-  width: 100%;
+  width: fit-content;
   height: 100%;
   pointer-events: none;
-  background: #e40000;
+  background: #fb3c01;
   transform: translate3d(0, 101%, 0);
   transition: transform 0.6s ease-expo;
 }
 
 .marquee__inner-wrap {
   height: 100%;
-  width: 200%;
+  width: 140%;
   display: flex;
   transform: translateX(0);
 }

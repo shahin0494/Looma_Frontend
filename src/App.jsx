@@ -13,7 +13,7 @@ import PortfolioAdmin from './admin/pages/PortfolioAdmin'
 import ProjectAdmin from './admin/pages/ProjectAdmin'
 import SettingsAdmin from './admin/pages/SettingsAdmin'
 import Pnf from './pages/Pnf'
-import AddJob from './users/pages/addJob'
+import AddJob from './users/pages/AddJob'
 
 
 const App = () => {
@@ -26,7 +26,7 @@ const App = () => {
         <Route path='/register' element={<Auth register />} />
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/hire-me' element={<HireMe />} />
-        <Route path='/portfolio/:id/view' element={<Portfolio />} />
+        <Route path='/jobs/:id/view' element={<Portfolio />} />
         <Route path='/profile' element={<Profile />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/add-job' element={<AddJob />} />

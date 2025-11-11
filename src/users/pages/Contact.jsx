@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import logo from '/logo22.jpg'
 import CurvedLoop from '../../reactbits/CurvedLoop'
@@ -9,7 +9,37 @@ import DotGrid from '../../reactbits/Dotgrid'
 import ClickSpark from '../../reactbits/ClickSpark'
 import { motion } from 'framer-motion';
 
+
 function Contact() {
+  const [token, setToken] = useState("")
+
+  useEffect(() => {
+    if (sessionStorage.getItem("token")) {
+      const token = sessionStorage.getItem("token")
+      setToken(token)
+    }
+  }, [])
+
+
+  const baseItems = [
+    { label: 'Home', href: '/' },
+    { label: 'Hire', href: '/Hire-me' },
+    { label: 'Dashboard', href: '/Dashboard' },
+    { label: 'Contact', href: '/Contact' },
+  ];
+
+  const items = token
+    ? [...baseItems, { label: 'Profile', href: '/profile' }] // user logged in
+    : [...baseItems, { label: 'Login', href: '/Login' }]; // user logged out
+
+
+  const logout = () => {
+    sessionStorage.clear()
+    setToken("")
+    setUserDp("")
+    setDropDownStatus(false)
+    navigate("/")
+  }
   return (
     <ClickSpark
       sparkColor='#fff'
@@ -17,44 +47,46 @@ function Contact() {
       sparkRadius={15}
       sparkCount={8}
       duration={400}>
-      <div className='bg-neutral-900 '>
-        <Header
-          logo={logo}
-          llogo={logo}
-        logoAlt="Company Logo"
-        items={[
-          { label: 'Home', href: '/' },
-            { label: 'Hire', href: '/Hire-me' },
-            { label: 'Dashboard', href: '/Dashboard' },
-            { label: 'Contact', href: '/Contact' },
-        ]}
-        activeHref="/Contact"
-        className="custom-nav"
-        ease="power2.easeOut"
-        baseColor="#262626"
-        pillColor="#262626 "
-        hoveredPillTextColor="#DC2626"
-        pillTextColor="#E5E5E5"
-        />
+
+
+      <div className='bg-neutral-950 '>
+        <div className='w-full flex bg-orange-600 items-center px-5'>
+          <Header
+            logoAlt="Company Logo"
+            items={items}
+            activeHref="/Contact"
+            className="custom-nav"
+            ease="power2.easeOut"
+            baseColor="#000000"
+            pillColor="#fb3c01"
+            hoveredPillTextColor="#fb3c01"
+            pillTextColor="#ffffff"
+          />
+          {token && (
+            <button
+              onClick={logout}
+              className='px-4 py-1.5 z-50 mt-4 bg-black ms-385 text-orange-600 hover:bg-orange-600/20 border-orange-600 border-2 rounded-4xl font-bold transition-all duration-200'
+            >
+              LOGOUT
+            </button>
+          )}
+        </div>
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
-          style={{ display: "grid", gridTemplateColumns: "500px 1180px" }}
-          className='bg-red-700'
-        >
+          style={{ display: "grid", gridTemplateColumns: "500px 1180px", backgroundColor:"#fb3c01" }}>
           <motion.div
             style={{ width: '100%', height: '600px', position: 'relative' }}
             initial={{ scale: 0.98, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 1, ease: "easeOut" }}
-          >
-            <div className="relative w-full h-screen">
+            transition={{ duration: 1, ease: "easeOut" }}>
+            <div className="relative z-50 w-full h-screen">
               <DotGrid
-                dotSize={3}
+                dotSize={4}
                 gap={100}
                 baseColor="#171717"
-                activeColor="#FAFAFA"
+                activeColor="#ffffff"
                 proximity={150}
                 shockRadius={250}
                 shockStrength={5}
@@ -63,15 +95,15 @@ function Contact() {
               />
               <div className="absolute inset-0 flex flex-col  mt-29 ">
                 {/* <h1 style={{fontStyle:"italic"}} className="text-sm text-justify font-medium text-neutral-950  px-2 ">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolor, provident dolore. Sed ipsam quasi quam iusto id, libero, dolorum perferendis in vero asperiores cumque! Consectetur iste quidem dicta error tenetur Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione, molestiae sit odio debitis doloremque quia facere repudiandae illo consequatur perferendis sed voluptate, dolore, quasi provssimos optio asperiores veniam impedit tenetur accusamus molestiae amet eos error? Mollitia quasi iste possimus consectetur in explicabo aspernatur?</h1> */}
-                
-                
+
+
               </div>
             </div>
           </motion.div>
-          <div className='bg-neutral-900 -mt-30 h-auto'>
-            <div className='mt-110 px-15 font-extralight  text-xl text-neutral-400'>
+          <div className='bg-neutral-950 -mt-30 h-auto'>
+            <div className='mt-94 px-15 font-extralight  text-xl text-orange-600'>
               <div className='flex justify-between px-10'>
-                
+
                 <div>
                   <motion.h1 initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, delay: 0.2 }} className='text-6xl'>Write Us  </motion.h1>
                   <motion.p initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5, delay: 0.3 }} className='text-sm mt-3' >support@looma.in</motion.p>

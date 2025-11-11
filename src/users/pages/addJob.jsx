@@ -3,6 +3,13 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { addJobsAPI } from "../../services/allAPI";
 import { ToastContainer, toast } from 'react-toastify'
+import { Link } from "react-router-dom";
+import { FaArrowLeft, FaArrowRight, FaChevronLeft } from "react-icons/fa";
+import { Check, RotateCcw } from 'lucide-react';
+import { LuRotateCcw } from "react-icons/lu";
+import { MdDone } from "react-icons/md";
+
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -44,19 +51,18 @@ function AddJob() {
     }, []);
 
     useEffect(() => {
-  const storedToken = sessionStorage.getItem("token");
-  if (storedToken) {
-    setToken(storedToken);
-  }
-}, []);
+        const storedToken = sessionStorage.getItem("token");
+        if (storedToken) {
+            setToken(storedToken);
+        }
+    }, []);
 
     // Skill helpers
-    const handleSkillChange = (index, field, value) => {
-        const updatedSkills = [...jobDetails.technicalSkills];
-        updatedSkills[index][field] = value;
-        setJobDetails({ ...jobDetails, technicalSkills: updatedSkills });
-    };
-
+   const handleSkillChange = (index, field, value) => {
+  const updatedSkills = [...jobDetails.technicalSkills];
+  updatedSkills[index][field] = value;
+  setJobDetails({ ...jobDetails, technicalSkills: updatedSkills });
+};
     const addSkillGroup = () => {
         const updatedSkills = [
             ...jobDetails.technicalSkills,
@@ -66,9 +72,9 @@ function AddJob() {
     };
 
     const handleReset = () => {
-        setJobDetails({
-            username: "", jobTitle: "", specializations: [], fees: "", availability: "", location: "", summary: "", experience: [], technicalSkills: [{ category: "", skills: [] }], email: "", phone: "", website: "", github: "", linkedin: "", twitter: "", portfolio: "", works: [], status: "", profilePhoto: [], backgroundPhoto: []
-        })
+        // setJobDetails({
+        //     username: "", jobTitle: "", specializations: [], fees: "", availability: "", location: "", summary: "", experience: [], technicalSkills: [{ category: "", skills: [] }], email: "", phone: "", website: "", github: "", linkedin: "", twitter: "", portfolio: "", works: [], status: "", profilePhoto: [], backgroundPhoto: []
+        // })
     }
 
 
@@ -93,87 +99,217 @@ function AddJob() {
     };
 
 
+    // const handleJobSubmit = async () => {
+    //     const { username, jobTitle, specializations, fees, availability, location, summary, experience, technicalSkills, email, phone, website, github, linkedin, twitter, portfolio, works, status, profilePhoto, backgroundPhoto } = jobDetails
+    //     if (
+    //         !username.trim() ||
+    //         !jobTitle.trim() ||
+    //         !fees.trim() ||
+    //         !availability.trim() ||
+    //         !location.trim() ||
+    //         !summary.trim() ||
+    //         !email.trim() ||
+    //         !phone.trim() ||
+    //         !website.trim() ||
+    //         !github.trim() ||
+    //         !linkedin.trim() ||
+    //         !twitter.trim() ||
+    //         !portfolio.trim() ||
+    //         specializations.length === 0 ||
+    //         experience.length === 0 ||
+    //         technicalSkills.length === 0 ||
+    //         !technicalSkills[0].category.trim() ||
+    //         technicalSkills[0].skills.length === 0 ||
+    //         works.length === 0 ||
+    //         profilePhoto.length === 0 ||
+    //         backgroundPhoto.length === 0
+    //     ) {
+    //         toast.info("Please fill all required fields properly");
+    //         return;
+    //     } else {
+    //         // api call
+    //         const reqHeader = {
+    //             "Authorization": `Bearer ${token}`,
+    //             "Content-Type": "multipart/form-data"
+    //         }
+    //         const reqBody = new FormData();
+    //         // append reqBody.append(key,value)
+    //         for (let key in jobDetails) {
+    //             // ✅ append files first (so multer catches them)
+    //             profilePhoto.forEach((file) => {
+    //                 reqBody.append("profilePhoto", file);
+    //             });
+
+    //             backgroundPhoto.forEach((file) => {
+    //                 reqBody.append("backgroundPhoto", file);
+    //             });
+
+    //             works.forEach((file) => {
+    //                 reqBody.append("works", file);
+    //             });
+
+    //             // ✅ append all other fields
+    //             reqBody.append("username", username);
+    //             reqBody.append("jobTitle", jobTitle);
+    //             reqBody.append("fees", fees);
+    //             reqBody.append("availability", availability);
+    //             reqBody.append("location", location);
+    //             reqBody.append("summary", summary);
+    //             reqBody.append("email", email);
+    //             reqBody.append("phone", phone);
+    //             reqBody.append("website", website);
+    //             reqBody.append("github", github);
+    //             reqBody.append("linkedin", linkedin);
+    //             reqBody.append("twitter", twitter);
+    //             reqBody.append("portfolio", portfolio);
+    //             reqBody.append("status", status);
+
+    //             // Convert array fields to JSON
+    //             reqBody.append("specializations", JSON.stringify(specializations));
+    //             reqBody.append("experience", JSON.stringify(experience));
+    //             reqBody.append("technicalSkills", JSON.stringify(technicalSkills));
+
+
+    //         }
+    //         try {
+    //             const result = await addJobsAPI(reqBody, reqHeader)
+    //             console.log(result);
+    //             if (result.status == 401) {
+    //                 toast.warning(result.response.data)
+    //                 // clear all field
+    //                 handleReset()
+    //             } else if (result.status == 200) {
+    //                 toast.success("Book added successfully")
+    //                 // clear all field
+    //                 handleReset()
+    //             } else {
+    //                 toast.error("Something went wrong")
+    //                 // clear all field
+    //                 handleReset()
+
+    //             }
+    //         } catch (err) {
+    //             console.log(err);
+
+    //         }
+    //     }
+    // }
+
+
+const flattenedTechnicalSkills =
+  Array.isArray(jobDetails.technicalSkills) && jobDetails.technicalSkills.length > 0
+    ? jobDetails.technicalSkills[0]
+    : { category: "", skills: [] };
+
     const handleJobSubmit = async () => {
-        const { username, jobTitle, specializations, fees, availability, location, summary, experience, technicalSkills, email, phone, website, github, linkedin, twitter, portfolio, works, status, profilePhoto, backgroundPhoto } = jobDetails
-        if (
-            !username.trim() ||
-            !jobTitle.trim() ||
-            !fees.trim() ||
-            !availability.trim() ||
-            !location.trim() ||
-            !summary.trim() ||
-            !email.trim() ||
-            !phone.trim() ||
-            !website.trim() ||
-            !github.trim() ||
-            !linkedin.trim() ||
-            !twitter.trim() ||
-            !portfolio.trim() ||
-            specializations.length === 0 ||
-            experience.length === 0 ||
-            technicalSkills.length === 0 ||
-            !technicalSkills[0].category.trim() ||
-            technicalSkills[0].skills.length === 0 ||
-            works.length === 0 ||
-            profilePhoto.length === 0 ||
-            backgroundPhoto.length === 0
-        ) {
-            toast.info("Please fill all required fields properly");
-            return;
-        } else {
-            // api call
-            const reqHeader = {
-                "Authorization": `Bearer ${token}`
-            }
-            const reqBody = new FormData();
-            // append reqBody.append(key,value)
-            for (let key in jobDetails) {
-                // if (key != "uploadImg") {
-                //     reqBody.append(key, bookDetails[key])
-                // } else {
-                //     bookDetails.uploadImg.forEach(img => {
-                //         reqBody.append("uploadImg", img)
-                //     })
-                // }
-                if (key === "profilePhoto") {
-                    jobDetails.profilePhoto.forEach((file) => {
-                        reqBody.append("profilePhoto", file);
-                    });
-                } else if (key === "backgroundPhoto") {
-                    jobDetails.backgroundPhoto.forEach((file) => {
-                        reqBody.append("backgroundPhoto", file);
-                    });
-                } else if (key === "specializations" || key === "experience" || key === "works" || key === "technicalSkills") {
-                    // Convert arrays/objects to JSON strings so backend can read them properly
-                    reqBody.append(key, JSON.stringify(jobDetails[key]));
-                } else {
-                    reqBody.append(key, jobDetails[key]);
-                }
+  const {
+    username,
+    jobTitle,
+    specializations,
+    fees,
+    availability,
+    location,
+    summary,
+    experience,
+    technicalSkills,
+    email,
+    phone,
+    website,
+    github,
+    linkedin,
+    twitter,
+    portfolio,
+    works,
+    status,
+    profilePhoto,
+    backgroundPhoto,
+  } = jobDetails;
 
-            }
-            try {
-                const result = await addJobsAPI(reqBody, reqHeader)
-                console.log(result);
-                if (result.status == 401) {
-                    toast.warning(result.response.data)
-                    // clear all field
-                    handleReset()
-                } else if (result.status == 200) {
-                    toast.success("Book added successfully")
-                    // clear all field
-                    handleReset()
-                } else {
-                    toast.error("Something went wrong")
-                    // clear all field
-                    handleReset()
+  // ✅ Validate all required fields
+  if (
+    !username.trim() ||
+    !jobTitle.trim() ||
+    !fees.trim() ||
+    !availability.trim() ||
+    !location.trim() ||
+    !summary.trim() ||
+    !email.trim() ||
+    !phone.trim() ||
+    !website.trim() ||
+    !github.trim() ||
+    !linkedin.trim() ||
+    !twitter.trim() ||
+    !portfolio.trim() ||
+    specializations.length === 0 ||
+    experience.length === 0 ||
+    technicalSkills.length === 0 ||
+    !technicalSkills[0].category.trim() ||
+    technicalSkills[0].skills.length === 0 ||
+    works.length === 0 ||
+    profilePhoto.length === 0 ||
+    backgroundPhoto.length === 0
+  ) {
+    toast.info("Please fill all required fields properly");
+    return;
+  }
 
-                }
-            } catch (err) {
-                console.log(err);
+  try {
+    const reqHeader = {
+      "Authorization": `Bearer ${token}`,
+    };
 
-            }
-        }
+    const reqBody = new FormData();
+
+    // ✅ [ADD HERE] → Get user's email from session storage
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    const userMail = user?.email || "";
+    reqBody.append("userMail", userMail);
+    // 🔺 this line makes sure backend receives the uploader’s email
+
+    // ✅ Append image files first — multer must receive these exact names
+    profilePhoto.forEach((file) => reqBody.append("profilePhoto", file));
+    backgroundPhoto.forEach((file) => reqBody.append("backgroundPhoto", file));
+    works.forEach((file) => reqBody.append("works", file));
+
+    // ✅ Append normal text + JSON fields
+    reqBody.append("username", username);
+    reqBody.append("jobTitle", jobTitle);
+    reqBody.append("fees", fees);
+    reqBody.append("availability", availability);
+    reqBody.append("location", location);
+    reqBody.append("summary", summary);
+    reqBody.append("email", email);
+    reqBody.append("phone", phone);
+    reqBody.append("website", website);
+    reqBody.append("github", github);
+    reqBody.append("linkedin", linkedin);
+    reqBody.append("twitter", twitter);
+    reqBody.append("portfolio", portfolio);
+    reqBody.append("status", status);
+    reqBody.append("specializations", JSON.stringify(specializations));
+    reqBody.append("experience", JSON.stringify(experience));
+    reqBody.append("technicalSkills", JSON.stringify(jobDetails.technicalSkills));
+   
+
+    // ✅ API Call
+    const result = await addJobsAPI(reqBody, reqHeader);
+    console.log("Upload Result:", result);
+
+    if (result.status === 401) {
+      toast.warning(result.response.data);
+      handleReset();
+    } else if (result.status === 200) {
+      toast.success("Job added successfully");
+      handleReset();
+    } else {
+      toast.error("Something went wrong");
+      handleReset();
     }
+  } catch (err) {
+    console.error("Error uploading job:", err);
+    toast.error("Upload failed — check console");
+  }
+};
 
 
 
@@ -495,22 +631,32 @@ function AddJob() {
                 </div> */}
 
                 {/* Submit Button */}
-                <div className="text-center flex justify-center gap-3 pt-6 job-section">
+                <div className="text-center  flex justify-center gap-3 pt-6 job-section">
 
 
-                    <button
-                        onClick={handleReset}
-                        type="button"
-                        className="px-8 py-3 bg-green-600 hover:bg-green-700 transition-all duration-300 rounded-lg text-white font-semibold shadow-md flex items-center gap-2 justify-center ">
-                        Reset
-                    </button>
+                    <div className="bg-neutral-800/20 rounded-lg">
+                        <Link to={"/profile"}>
+                           <span className="px-4 py-3  hover:bg-blue-600/40  transition-all duration-300 rounded-lg text-white font-semibold  flex items-center gap-2 justify-center"><FaChevronLeft  className="text-blue-600 text-lg"/></span>
+                        </Link>
+                    </div>
 
-                    <button
-                        onClick={handleJobSubmit}
-                        type="button"
-                        className="px-8 py-3 bg-red-600 hover:bg-red-700 transition-all duration-300 rounded-lg text-white font-semibold shadow-md flex items-center gap-2 justify-center ">
-                        Post Job
-                    </button>
+                    <div className="bg-neutral-800/20 rounded-lg">
+                        <button
+                            onClick={handleReset}
+                            type="button"
+                            className="px-5 py-3  hover:bg-red-600/40 shadow-neutral-950 transition-all duration-300 rounded-lg text-white font-semibold flex items-center gap-2 justify-center ">
+                            <LuRotateCcw  className="text-red-600 text-xl"/>
+                        </button>
+                    </div>
+
+                    <div className="bg-neutral-800/20 rounded-lg">
+                        <button
+                            onClick={handleJobSubmit}
+                            type="button"
+                            className="px-4 py-2   hover:bg-green-600/40  transition-all  duration-300 rounded-lg text-white font-semibold  flex items-center gap-2 justify-center ">
+                            <MdDone className="text-green-600 text-2xl" />
+                        </button>
+                    </div>
 
                 </div>
             </div>
