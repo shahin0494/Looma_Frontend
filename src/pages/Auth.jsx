@@ -116,7 +116,10 @@ function Auth({ register = false }) {
         sessionStorage.setItem("token", result.data.token)
 
         setTimeout(() => {
-          if (result.data.user.role === "freelancer") {
+
+          if (result.data.user.role === "admin") {
+            navigate("/admin-dashboard")
+          }else if (result.data.user.role === "freelancer") {
             navigate("/")
           } else if (result.data.user.role === "user") {
             navigate("/")

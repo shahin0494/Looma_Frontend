@@ -72,9 +72,9 @@ function AddJob() {
     };
 
     const handleReset = () => {
-        // setJobDetails({
-        //     username: "", jobTitle: "", specializations: [], fees: "", availability: "", location: "", summary: "", experience: [], technicalSkills: [{ category: "", skills: [] }], email: "", phone: "", website: "", github: "", linkedin: "", twitter: "", portfolio: "", works: [], status: "", profilePhoto: [], backgroundPhoto: []
-        // })
+        setJobDetails({
+            username: "", jobTitle: "", specializations: [], fees: "", availability: "", location: "", summary: "", experience: [], technicalSkills: [{ category: "", skills: [] }], email: "", phone: "", website: "", github: "", linkedin: "", twitter: "", portfolio: "", works: [], status: "", profilePhoto: [], backgroundPhoto: []
+        })
     }
 
 

@@ -25,3 +25,35 @@ export const getAllJobsAPI = async (search,reqHeader)=>{
 export const viewJobsAPI = async (jobID,reqHeader)=>{
     return await commonAPI("GET",`${SERVERURL}/jobs/${jobID}/view`,{},reqHeader)
 }
+
+// update user profile
+export const updateUserProfileAPI = async (reqBody,reqHeader)=>{
+    return await commonAPI("PUT",`${SERVERURL}/user-profile/edit`,reqBody,reqHeader)
+}
+
+// get all user uploaded jobs
+export const getAllUserUploadJobsAPI = async (reqHeader)=>{
+    return await commonAPI("GET", `${SERVERURL}/user-jobs`, {}, reqHeader)
+}
+
+//  remove user upload books - called by profile component
+export const removeUserUploadJobsAPI = async (jobID, reqHeader) => {
+    return await commonAPI("DELETE", `${SERVERURL}/user-jobs/${jobID}/remove`, {}, reqHeader)
+}
+
+// get all user bought books
+export const getAllUserPurchasedJobsAPI = async (reqHeader) => {
+    return await commonAPI("GET", `${SERVERURL}/user-bought-jobs`, {}, reqHeader)
+}
+
+// admin
+ 
+// get all users
+export const getAllUsersAPI = async (reqHeader)=>{
+    return await commonAPI("GET",`${SERVERURL}/all-users`,{},reqHeader)
+}
+
+// update admin profile
+export const updateAdminProfileAPI = async (reqBody,reqHeader)=>{
+    return await commonAPI("PUT",`${SERVERURL}/admin-profile/edit`,reqBody,reqHeader)
+}
