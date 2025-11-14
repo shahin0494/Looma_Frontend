@@ -134,25 +134,29 @@ const SettingsAdmin = () => {
 
   useEffect(() => {
     // Animate header
-    gsap.fromTo(
-      headerRef.current,
-      { opacity: 0, y: -12 },
-      { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }
-    );
+    if (headerRef.current) {
+      gsap.fromTo(
+        headerRef.current,
+        { opacity: 0, y: -12 },
+        { opacity: 1, y: 0, duration: 0.45, ease: "power2.out" }
+      );
+    }
 
     // Animate cards
-    gsap.fromTo(
-      cardsRef.current,
-      { opacity: 0, y: 8 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.45,
-        delay: 0.1,
-        stagger: 0.08,
-        ease: "power2.out"
-      }
-    );
+    if (cardsRef.current && cardsRef.current.length > 0) {
+      gsap.fromTo(
+        cardsRef.current,
+        { opacity: 0, y: 8 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.45,
+          delay: 0.1,
+          stagger: 0.08,
+          ease: "power2.out"
+        }
+      );
+    }
 
     // Animate profile section
     if (profileRef.current) {
@@ -208,49 +212,26 @@ const SettingsAdmin = () => {
     profileImage: profile.profileImage
   });
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData(prev => ({ ...prev, profileImage: reader.result }));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleSave = () => {
-    setProfile(prev => ({
-      username: formData.username || prev.username,
-      password: formData.password ? "********" : prev.password,
-      bio: formData.bio || prev.bio,
-      profileImage: formData.profileImage || prev.profileImage
-    }));
-    setModalOpen(false);
-  };
 
   return (
-    <div className="min-h-screen bg-black text-white px-8 relative">
-      <Dock
+    <div className="h-screen bg-black text-white px-8 ">
+      
+      {/* Header */}
+      <div
+        ref={headerRef}
+        className="ms-3 mt- mb-8"
+      >
+        <Dock
         items={items}
         panelHeight={68}
         baseItemSize={50}
         magnification={70}
       />
-      {/* Header */}
-      <div
-        ref={headerRef}
-        className="ms-3 mt-5 mb-8"
-      >
-        <h2 className="text-6xl font-extralight tracking-tight text-neutral-200 mb-2">
+        <h2 className="text-6xl font-extralight tracking-tight text-neutral-200 mt-2 mb-3">
           Admin Settings
         </h2>
-        <hr className="mt-5 text-neutral-800" />
+        <hr className="mt-7 text-neutral-800" />
       </div>
 
       {/* Settings Cards */}
@@ -262,18 +243,18 @@ const SettingsAdmin = () => {
         className="w-full mx-auto mb-16"
       >
         <div className="relative overflow-hidden  rounded-3xl bg-gradient-to-br from-neutral-900/50 to-neutral-950/50 border border-white/5 backdrop-blur-xl">
-          <div className="absolute  inset-0 w-full bg-gradient-to-tr from-emerald-500/5 via-transparent to-transparent pointer-events-none"></div>
+           {/* <div className="absolute  inset-0 w-full bg-gradient-to-tr from-emerald-500/5 via-transparent to-transparent pointer-events-none"></div> */}
 
           <div className="relative  p-12">
             <div className="flex flex-col md:flex-row gap-12 items-start">
               <div className="relative group">
-                <div className="absolute inset-0  bg-gradient-to-br from-emerald-400/20 to-cyan-400/20 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-500"></div>
+                {/* <div className="absolute inset-0  bg-gradient-to-br from-emerald-400/20 to-cyan-400/20 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-500"></div> */}
                 {
                   existingProfilePic ?
-                    <img className='border border-slate-400 ' src={preview ? preview : `${SERVERURL}/uploads/${existingProfilePic}`} alt='user admin logo' style={{ width: '100px', height: '100px', borderRadius: '50%' }} />
+                    <img className='border border-slate-800 ' src={preview ? preview : `${SERVERURL}/uploads/${existingProfilePic}`} alt='user admin logo' style={{ width: '400px', height: '400px', borderRadius: '2%' }} />
                     :
 
-                    <img className='border border-slate-400 ' src={preview ? preview : 'https://static.vecteezy.com/system/resources/previews/013/716/222/non_2x/coin-of-alexander-the-great-vintage-illustration-free-vector.jpg'} alt='user admin logo' style={{ width: '100px', height: '100px', borderRadius: '50%' }} />
+                    <img className='border border-slate-400 ' src={preview ? preview : 'https://static.vecteezy.com/system/resources/previews/013/716/222/non_2x/coin-of-alexander-the-great-vintage-illustration-free-vector.jpg'} alt='user admin logo' style={{ width: '200px', height: '100px', borderRadius: '50%' }} />
                 }
 
               </div>
@@ -347,7 +328,7 @@ const SettingsAdmin = () => {
                     type="text"
                     id="username"
                     name="username"
-                    value={adminDetails.username  || ""}
+                    value={adminDetails.username || ""}
                     onChange={e => setAdminDetails({ ...adminDetails, username: e.target.value })}
                     className="w-full bg-white/5 rounded-md px-3 py-2 border border-white/20 focus:outline-none focus:border-emerald-400 transition"
                   />
@@ -359,7 +340,7 @@ const SettingsAdmin = () => {
 
                     name="password"
                     placeholder="Enter new password"
-                    value={adminDetails.password  || ""}
+                    value={adminDetails.password || ""}
                     onChange={e => setAdminDetails({ ...adminDetails, password: e.target.value })}
                     className="w-full bg-white/5 rounded-md px-3 py-2 border border-white/20 focus:outline-none focus:border-emerald-400 transition"
                     autoComplete="new-password"
@@ -372,7 +353,7 @@ const SettingsAdmin = () => {
 
                     name="password"
                     placeholder="Confirm new password"
-                    value={adminDetails.cpassword  || ""}
+                    value={adminDetails.cpassword || ""}
                     onChange={e => setAdminDetails({ ...adminDetails, cpassword: e.target.value })}
                     className="w-full bg-white/5 rounded-md px-3 py-2 border border-white/20 focus:outline-none focus:border-emerald-400 transition"
                     autoComplete="new-password"
@@ -381,11 +362,11 @@ const SettingsAdmin = () => {
                 <div>
                   <label htmlFor="bio" className="block mb-1 font-semibold">Bio</label>
                   <textarea
-                    
+
                     name="bio"
-                    value={adminDetails.bio  || ""}
+                    value={adminDetails.bio || ""}
                     onChange={e => setAdminDetails({ ...adminDetails, bio: e.target.value })}
-                    
+
                     className="w-full bg-white/5 rounded-md px-3 py-2 border border-white/20 focus:outline-none focus:border-emerald-400 transition resize-none"
                   />
                 </div>

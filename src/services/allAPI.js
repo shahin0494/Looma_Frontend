@@ -57,3 +57,13 @@ export const getAllUsersAPI = async (reqHeader)=>{
 export const updateAdminProfileAPI = async (reqBody,reqHeader)=>{
     return await commonAPI("PUT",`${SERVERURL}/admin-profile/edit`,reqBody,reqHeader)
 }
+
+// list all jobs
+export const allJobsAdminAPI = async (reqHeader)=>{
+    return await commonAPI("GET",`${SERVERURL}/admin-all-jobs`,{},reqHeader)
+}
+
+// update job status
+export const updateJobStatusAPI = async (reqBody,reqHeader)=>{
+    return await commonAPI("PUT",`${SERVERURL}/admin/jobs/approve`,reqBody,reqHeader)
+}

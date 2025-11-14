@@ -8,12 +8,13 @@ import ScrollReveal from '../../reactbits/ScrollReveal'
 import SpotlightCard from '../../reactbits/SpotlightCard';
 import Footer from '../../component/Footer';
 import FlowingMenu from '../../reactbits/FlowingMenu'
-import logo from '/logo22.jpg'
 import ClickSpark from '../../reactbits/ClickSpark';
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Spline from '@splinetool/react-spline';
 import { useNavigate } from 'react-router-dom';
+import LogoLoop from '../../reactbits/LogoLoop'
+import { SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiJavascript, SiFramer, SiMeta, SiAdobe } from 'react-icons/si';
+import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
 
 
 gsap.registerPlugin(ScrollTrigger);
@@ -45,7 +46,7 @@ function Home() {
 
       setUserDp(user.profile)
     }
-  },[token])
+  }, [token])
 
   const logout = () => {
     sessionStorage.clear()
@@ -149,31 +150,39 @@ function Home() {
     }
   }, []);
 
-  const menuItems = [
-    { label: 'Logout', ariaLabel: 'Go to home page', link: '/' },
-    { label: 'Profile', ariaLabel: 'Learn about us', link: '/profile' },
-  ];
-
-  const socialItems = [
-    { label: 'Twitter', link: 'https://twitter.com' },
-    { label: 'GitHub', link: 'https://github.com' },
-    { label: 'LinkedIn', link: 'https://linkedin.com' }
-  ];
-
   // const token = sessionStorage.getItem("token") || localStorage.getItem("token");
 
-// Base items (always visible)
-const baseItems = [
-  { label: 'Home', href: '/' },
-  { label: 'Hire', href: '/Hire-me' },
-  { label: 'Dashboard', href: '/Dashboard' },
-  { label: 'Contact', href: '/Contact' },
+  // Base items (always visible)
+  const baseItems = [
+    { label: 'Home', href: '/' },
+    { label: 'Hire', href: '/Hire-me' },
+    { label: 'Dashboard', href: '/Dashboard' },
+    { label: 'Contact', href: '/Contact' },
+  ];
+
+  // Add login only if no token
+  const items = token
+    ? [
+      ...baseItems,
+      { label: 'Profile', href: '/profile' },
+      { label: 'Logout', onClick: logout }   // 👈 ADD THIS
+    ]
+    : [
+      ...baseItems,
+      { label: 'Login', href: '/Login' }
+    ];
+
+  // logo loop
+  const techLogos = [
+  { node: <FaFacebook color="#737373" />, title: "React", href: "https://react.dev" },
+  { node: <SiMeta color="#737373" />, title: "Next.js", href: "https://nextjs.org" },
+  { node: <FaInstagram color="#737373" />, title: "TypeScript", href: "https://www.typescriptlang.org" },
+  { node: <SiAdobe color="#737373" />, title: "Tailwind CSS", href: "https://tailwindcss.com" },
+  { node: <FaTwitter color="#737373" />, title: "Tailwind CSS", href: "https://tailwindcss.com" },
+  { node: <SiFramer color="#737373" />, title: "Tailwind CSS", href: "https://tailwindcss.com" },
 ];
 
-// Add login only if no token
-const items = token
-  ? [...baseItems , { label: 'Profile', href: '/profile' } ] // user logged in
-  : [...baseItems, { label: 'Login', href: '/Login' }]; // user logged out
+
 
   return (
     <ClickSpark
@@ -184,7 +193,7 @@ const items = token
       duration={400}>
       <div className='bg-zinc-950'>
 
-        <div className=' w-full  flex justify-end items-center '>
+        <div className=' w-full frosted-header flex justify-end items-center '>
           <Header
             //logo={logo}
             logoAlt="Company Logo"
@@ -197,7 +206,7 @@ const items = token
             hoveredPillTextColor="#fb3c01"
             pillTextColor="#ffffff"
           />
-          {token? <button onClick={logout} className='px-4 py-1.5 mt-4 me-5 bg-black   text-orange-600  hover:bg-orange-600/20  border-orange-600  border-2 rounded-4xl font-bold transition-all duration-200 '>LOGOUT</button> : ""}
+          {/* {token? <button style={{backgroundColor:"#fb3c01"}} onClick={logout} className='px-4 py-1.5  me-5    text-white  hover:bg-orange-600/20  border-orange-600  border rounded-4xl font-bold transition-all duration-200 '>LOGOUT</button> : ""} */}
         </div>
         {/* section 1 redesigned */}
         <section className="relative h-screen flex flex-col md:flex-row items-center justify-center  overflow-hidden px-6 md:px-16">
@@ -250,7 +259,7 @@ const items = token
             </div>
           </div>
 
-          
+
         </section>
 
 
@@ -271,7 +280,7 @@ const items = token
           </div>
 
           <div style={{
-            
+
           }} className="w-300 flex flex-col justify-between border border-neutral-800 rounded-r-2xl md:py-65  bg-neutral-900 bg-no-repeat  inset-0 bg-cover bg-center">
             {/* Navigation */}
             {/* Main Content */}
@@ -298,7 +307,7 @@ const items = token
           </div>
         </div>
         {/* section 3 */}
-        <div style={{color:"#fb3c01"}} ref={section3Ref} className='flex-col bg-neutral-900 border-neutral-800 border  gap-5 mt-10 w-400 h-170 mb-10 ms-10 rounded-4xl p-5 overflow-hidden'>
+        <div style={{ color: "#fb3c01" }} ref={section3Ref} className='flex-col bg-neutral-900 border-neutral-800 border  gap-5 mt-10 w-400 h-170 mb-10 ms-10 rounded-4xl p-5 overflow-hidden'>
           <h1 className='text-3xl sm:text-4xl md:text-8xl  font-extralight px-5 md:px-10 py-5  mt-5'>Our services</h1> <hr className='mt-6 md:mt-2 text-orange-600 ms-5 md:ms-10 mr-15' />
           <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mt-10 px-5 md:px-10'>
             <SpotlightCard className="custom-spotlight-card" spotlightColor="rgba(255, 215, 0, 0.2)">
@@ -369,9 +378,30 @@ const items = token
           </div>
           {/* section4  */}
         </div  >
+
+        <div  className='py-30'>
+          <h1 className='text-neutral-500 font-extrabold underline underline-offset-8 text-center text-5xl'>Our Partners</h1>
+          {/* Basic horizontal loop */}
+          <div style={{height: '200px',position: 'relative',overflow: 'hidden',top:"100px" }}>
+            <LogoLoop
+              logos={techLogos}
+              speed={50}
+              direction="right"
+              logoHeight={28}
+              gap={70}
+              hoverSpeed={0}
+              fadeOut
+                    fadeOutColor="#000000"
+              scaleOnHover
+            
+              ariaLabel="Technology partners"
+            />
+          </div>
+
+        </div>
         <div className='px-10'>
           <div style={{ height: '70px' }} className='flex items-center justify-center ms-100 rounded-lg border border-orange-600  mt-10 mb-25 w-200 md:mt-24'>
-            <FlowingMenu  items={demoItems} />
+            <FlowingMenu items={demoItems} />
           </div>
         </div>
         <Footer />

@@ -132,7 +132,7 @@ function HireMe() {
                   jobs.map(job => (
                     <motion.div
                       key={job?._id}
-                      className="relative border w-300 border-neutral-800 rounded-xl p-8 sm:p-10 bg-neutral-900/30 text-white max-w-3xl mx-auto backdrop-blur-sm transition-all duration-500 hover:bg-neutral-900/80 hover:shadow-[0_0_40px_-15px_rgba(255,255,255,0.05)]" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: 'easeOut' }}>
+                      className="relative border w-300 border-neutral-800 rounded-xl p-8 sm:p-10 bg-neutral-900/30 text-white max-w-3xl mx-auto backdrop-blur-sm transition-all duration-500 hover:bg-neutral-900/80 hover:shadow-[0_0_40px_-15px_rgba(255,255,255,0.05)]" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: 'easeOut' }} hidden={job?.jobStatus == "pending" || job?.jobStatus == "sold"}>
                       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6">
                         <div className="flex items-center gap-4">
                           <img

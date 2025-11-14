@@ -3,10 +3,16 @@ import Footer from '../../component/Footer';
 import { useNavigate } from 'react-router-dom';
 import { UserRound, Ratio, SquareChartGantt, House, Wrench } from 'lucide-react';
 import Dock from "../components/FreelanceDashboardHeader";
+import { allJobsAdminAPI, updateJobStatusAPI } from "../../services/allAPI";
+import { useEffect, useState } from "react";
 
 const ManageProjectRequests = () => {
   
    const navigate = useNavigate();
+   const [userJobs, setUserJobs] = useState([])
+const [updateJobStatus, setUpdateJobStatus] = useState([])
+console.log(userJobs);
+
   const items = [
     { icon: <House size={18} color='#A3A3A3' />, label: 'Dashboard', onClick: () => navigate('/admin-dashboard') },
     { icon: <UserRound size={18} color='#A3A3A3' />, label: 'Clients', onClick: () => navigate('/admin-clients') },
@@ -15,40 +21,39 @@ const ManageProjectRequests = () => {
     { icon: <Wrench size={18} color='#A3A3A3' />, label: 'Settings', onClick: () => navigate('/admin-settings') },
   ];
 
-  const projectRequests = [
-    {
-      id: 1,
-      title: "Website Redesign",
-      client: "Acme Co.",
-      budget: "$1,200",
-      date: "Oct 20, 2025",
-      description: "Full redesign of client portfolio site with responsive sections and animations."
-    },
-    {
-      id: 2,
-      title: "Mobile App UI",
-      client: "Pixel Labs",
-      budget: "$900",
-      date: "Oct 18, 2025",
-      description: "Design screens for onboarding, dashboard and profile flows."
-    },
-    {
-      id: 3,
-      title: "E‑commerce Setup",
-      client: "ShopEasy",
-      budget: "$2,400",
-      date: "Oct 15, 2025",
-      description: "Set up storefront, product pages, and payment integration."
-    },
-    {
-      id: 4,
-      title: "Marketing Campaign Assets",
-      client: "Brandly",
-      budget: "$700",
-      date: "Oct 12, 2025",
-      description: "Create banners, social media posts, and video snippets for online marketing."
+  useEffect(()=>{
+    if (sessionStorage.getItem("token")) {
+      const token = sessionStorage.getItem("token")
+      GetAllJobs(token)
     }
-  ];
+  },[updateJobStatus])
+
+  const GetAllJobs = async (userToken)=>{
+    const reqHeader = {
+      "Authorization": `Bearer ${userToken}`
+    }
+    try {
+      const result = await allJobsAdminAPI(reqHeader)
+      setUserJobs(result.data)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const approveJob = async (job)=>{
+    const userToken = sessionStorage.getItem("token")
+    const reqHeader = {
+      "Authorization": `Bearer ${userToken}`
+    }
+    try {
+      const result = await updateJobStatusAPI( {_id: job._id},reqHeader)
+      setUpdateJobStatus(result.data)
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+ 
 
   return (
     <div className="min-h-screen bg-black text-white px-8 ">
@@ -74,52 +79,58 @@ const ManageProjectRequests = () => {
       </motion.div>
 
       {/* Project Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {projectRequests.map((project, i) => (
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-6">
+        {
+        userJobs.length>0?
+        userJobs.map((item, index) => (
           <motion.div
-            key={project.id}
+            key={index}
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
             whileHover={{ scale: 1.02 }}
-            className="relative overflow-hidden rounded-2xl p-6 border border-white/10 bg-white/2 backdrop-blur-md"
+            className="relative overflow-hidden rounded-2xl p-6 border h-45 border-white/10 bg-white/2 backdrop-blur-md"
           >
             <div className="relative z-10">
               {/* Project Header */}
-              <div className="flex items-start justify-between mb-3">
+              <div className="flex items-start justify-between  mb-3">
                 <div>
-                  <div className="text-sm text-white/70 font-medium">{project.client}</div>
-                  <div className="text-lg text-white font-light">{project.title}</div>
+                  <div className="text-sm text-white/70 font-medium">{item.username}</div>
+                  <div className="text-lg text-white font-light">{item.jobTitle}</div>
                 </div>
                 <div className="text-xs text-white/50 text-right">
-                  <div>{project.date}</div>
-                  <div className="mt-2 text-white/60">{project.budget}</div>
+                  <div>{item.location}</div>
+                  <div className="mt-2 text-white/60">{item.fees}</div>
                 </div>
               </div>
 
               {/* Project Description */}
-              <p className="text-sm text-white/60 mb-4 line-clamp-3">{project.description}</p>
+              <p className="text-sm text-white/60 mb-4 line-clamp-3">{item.specializations}</p>
 
               {/* Action Buttons */}
               <div className="flex items-center justify-between gap-3">
                 <div className="flex gap-2">
-                  <button className="px-4 py-2 rounded text-sm font-medium hover:bg-emerald-500 hover:text-black text-emerald-400 border border-neutral-800 hover:brightness-105 transition">
-                    Accept
-                  </button>
-                  <button className="px-4 py-2 rounded text-sm font-medium border-neutral-800 border hover:text-white text-neutral-500 hover:bg-white/20 transition">
-                    Update
-                  </button>
+                  {
+                    item?.jobStatus== "pending" &&
+                    <button onClick={()=>approveJob(item)} className="px-4 py-2 rounded text-sm font-medium hover:bg-emerald-500 hover:text-black text-emerald-400 border border-neutral-800 hover:brightness-105 transition">
+                    Approve
+                  </button>}
+                  {
+                     item?.jobStatus== "approved" &&
+                    <button className="px-4 py-2 rounded text-sm font-medium border-neutral-800 border hover:text-white text-neutral-500 hover:bg-white/20 transition">
+                    Approved
+                  </button>}
                 </div>
-                <button className="px-4 py-2 rounded text-sm font-medium border border-neutral-800 text-red-500 hover:bg-red-700 hover:text-white hover:brightness-95 transition">
-                  Reject
-                </button>
               </div>
             </div>
 
             {/* Background Glow */}
             <div className="absolute -right-6 -bottom-6 w-28 h-28 bg-white/5 rounded-full blur-2xl" />
           </motion.div>
-        ))}
+        ))
+      :
+      <p>no jobs</p>
+      }
       </div>
       <Footer/>
     </div>

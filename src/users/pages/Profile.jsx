@@ -42,7 +42,7 @@ const Profile = () => {
       SetBio(user.bio)
       setJobType(user.jobType)
     }
-  }, [userEditResponse])
+  }, [userEditResponse,deleteJobkStatus])
 
 
   useEffect(() => {
