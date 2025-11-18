@@ -3,7 +3,8 @@ import React, { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { FaEye, FaEyeSlash, FaGoogle, FaLinkedin, FaGithub } from 'react-icons/fa'
 import logo from '/logo22.jpg'
-import { registerAPI, loginAPI } from '../services/allAPI'
+import { googleLoginAPI,registerAPI, loginAPI } from '../services/allAPI'
+import { GoogleLogin } from '@react-oauth/google';
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify'
 import { jwtDecode } from "jwt-decode";
@@ -140,6 +141,38 @@ function Auth({ register = false }) {
     }
   }
 
+  const handleGoogleLogin = async (credentialResponse) => {
+    const credential = credentialResponse.credential
+    const details = jwtDecode(credential)
+    console.log(details);
+    try{
+      const result = await googleLoginAPI({
+      username: details.name,
+      email: details.email,
+      password: "googlepswd",
+      profile: details.picture
+    })
+    console.log(result);
+    if (result.status == 200) {
+      toast.success("Login Successfull")
+      sessionStorage.setItem("user", JSON.stringify(result.data.user))
+      sessionStorage.setItem("token", result.data.token)
+      setTimeout(() => {
+        if (result.data.user.role == "admin") {
+          navigate("/admin-dashboard")
+        } else {
+          navigate("/")
+        }
+      }, 2500);
+    } else {
+      toast.error("something went wrong")
+    }
+    }catch(err){
+      console.log(err);
+      
+    }
+  }
+
   return (
     <>
       {/* Animated ColorBends as full-page fixed background */}
@@ -225,7 +258,7 @@ function Auth({ register = false }) {
                         name="name"
                         value={formData.username}
                         onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-                        className="w-full px-4 py-3 bg-neutral-700/50 border border-neutral-600/50 rounded-lg text-neutral-100 placeholder-neutral-200 focus:outline-none focus:ring-2 focus:ring-red-800/50 focus:border-red-700/50 transition-all duration-200 backdrop-blur-sm"
+                        className="w-full px-4 py-3 bg-neutral-700/50 border border-neutral-600/50 rounded-lg text-neutral-100 placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-red-800/50 focus:border-red-700/50 transition-all duration-200 backdrop-blur-sm"
                         placeholder="Enter your full name"
                       />
                     </div>
@@ -297,11 +330,11 @@ function Auth({ register = false }) {
                         name="role"
                         value={formData.role}
                         onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-                        className="w-full px-4 py-3 bg-neutral-700/50 border border-neutral-600/50 rounded-lg text-neutral-100 placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-red-800/50 focus:border-red-700/50 transition-all duration-200 backdrop-blur-sm"
+                        className="w-full px-2 me-5 py-3 bg-neutral-700/50 border border-neutral-600/50 rounded-lg text-neutral-100 placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-red-800/50 focus:border-red-700/50 transition-all duration-200 backdrop-blur-sm"
                       >
-                        <option value="" disabled>Select your role</option>
-                        <option value="freelancer">Freelancer</option>
-                        <option value="client">Client</option>
+                        <option  value="" disabled>Select your role</option>
+                        <option  value="freelancer">Freelancer</option>
+                        <option  value="client">Client</option>
                       </select>
                     </div>
                   )}
@@ -330,23 +363,34 @@ function Auth({ register = false }) {
                       </button>}
                 </form>
                 {/* Divider */}
+                {!register ?
                 <div className="my-6 flex items-center">
                   <div className="flex-1 h-px bg-neutral-600/50"></div>
                   <span className="px-4 text-neutral-500 text-sm">or continue with</span>
                   <div className="flex-1 h-px bg-neutral-600/50"></div>
                 </div>
+                :
+                <p></p>
+                }
                 {/* Social login buttons */}
-                <div className="grid grid-cols-3 gap-3">
-                  <button className="flex items-center justify-center p-3 bg-neutral-700/50 border border-neutral-600/50 rounded-lg hover:bg-neutral-700/70 transition-all duration-200 group">
-                    <FaGoogle className="text-red-400 group-hover:text-red-300" />
-                  </button>
-                  <button className="flex items-center justify-center p-3 bg-neutral-700/50 border border-neutral-600/50 rounded-lg hover:bg-neutral-700/70 transition-all duration-200 group">
-                    <FaLinkedin className="text-blue-400 group-hover:text-blue-300" />
-                  </button>
-                  <button className="flex items-center justify-center p-3 bg-neutral-700/50 border border-neutral-600/50 rounded-lg hover:bg-neutral-700/70 transition-all duration-200 group">
-                    <FaGithub className="text-neutral-400 group-hover:text-neutral-300" />
-                  </button>
+                {
+                  !register ?
+                  <div className="px-3 gap-3">
+                  
+                      <GoogleLogin
+                      onSuccess={credentialResponse => {
+                        console.log(credentialResponse)
+                        handleGoogleLogin(credentialResponse)
+                      }}
+                      onError={() => {
+                        console.log('Login Failed')
+                      }}
+                    />
+                  
                 </div>
+                :
+                <p></p>
+                }
                 {/* Toggle between login/register */}
                 <div className="mt-6 text-center">
                   <p className="text-neutral-400">

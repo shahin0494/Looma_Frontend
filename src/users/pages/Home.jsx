@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import LogoLoop from '../../reactbits/LogoLoop'
 import { SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiJavascript, SiFramer, SiMeta, SiAdobe } from 'react-icons/si';
 import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
+import ChromaGrid from '../../reactbits/ChromaGrid';
 
 
 gsap.registerPlugin(ScrollTrigger);
@@ -172,15 +173,110 @@ function Home() {
       { label: 'Login', href: '/Login' }
     ];
 
+const items1 = [
+  {
+    image: "./cr.jpg",
+    title: "Cristiano Ronaldo",
+    subtitle: "Looma helps me find top creatives fast. Smooth, sharp and world-class — just how I like things.",
+    handle: "@cristiano",
+    borderColor: "#FF3E3E",
+    gradient: "linear-gradient(145deg, #FF3E3E, #0A0A0A)",
+   
+  },
+  {
+    image: "ny.jpg",
+    title: "Neymar Junior",
+    subtitle: "Whenever I need quick edits or branding work, Looma connects me with artists who understand my vibe.",
+    handle: "@neymarjr",
+    borderColor: "#F59E0B",
+    gradient: "linear-gradient(160deg, #F59E0B, #000)",
+   
+  },
+  {
+    image: "tm.jpg",
+    title: "Tom Hardy",
+    subtitle: "Looma keeps things simple. I post a task, get results. No nonsense — just quality talent.",
+    handle: "@tomhardy",
+    borderColor: "#6366F1",
+    gradient: "linear-gradient(135deg, #6366F1, #000)",
+   
+  },
+  {
+    image: "ts.webp",
+    title: "Thomas Shelby",
+    subtitle: "In business, speed and precision matter. Looma delivers both. That’s why I use it.",
+    handle: "@thomasshelby",
+    borderColor: "#EC4899",
+    gradient: "linear-gradient(170deg, #EC4899, #0A0A0A)",
+   
+  },
+  {
+    image: "jq.webp",
+    title: "Keanu Reeves",
+    subtitle: "Looma gives creators a real stage. Every project becomes a chance to build something meaningful.",
+    handle: "@babayaga",
+    borderColor: "#14B8A6",
+    gradient: "linear-gradient(150deg, #14B8A6, #000)",
+   
+  },
+  {
+    image: "cb.jpg",
+    title: "Christian Bale",
+    subtitle: "I value professionals who stay committed. Looma connects me with people who take their craft seriously.",
+    handle: "@thedarkknight",
+    borderColor: "#F43F5E",
+    gradient: "linear-gradient(180deg, #F43F5E, #000)",
+   
+  },
+  {
+    image: "em.avif",
+    title: "Eminem",
+    subtitle: "I love how empowering Looma feels — it gives freelancers the spotlight they deserve.",
+    handle: "@slimshady",
+    borderColor: "#3B82F6",
+    gradient: "linear-gradient(130deg, #3B82F6, #0A0A0A)",
+   
+  },
+  {
+    image: "hc.webp",
+    title: "Henry Cavill",
+    subtitle: "Whether it's tech work or creative tasks, Looma always pairs me with reliable professionals.",
+    handle: "@henry",
+    borderColor: "#22C55E",
+    gradient: "linear-gradient(175deg, #22C55E, #000)",
+   
+  },
+  {
+    image: "ww.jpg",
+    title: "Walter White",
+    subtitle: "Looma makes collaboration effortless. Strong talent, smooth experience.",
+    handle: "@thecook",
+    borderColor: "#A855F7",
+    gradient: "linear-gradient(120deg, #A855F7, #000)",
+   
+  },
+  {
+    image: "tts.webp",
+    title: "Tony Stark",
+    subtitle: "If there’s one platform that blends tech and talent right — it’s Looma. Efficient. Smart. Seamless.",
+    handle: "@ironman",
+    borderColor: "#0EA5E9",
+    gradient: "linear-gradient(190deg, #0EA5E9, #000)",
+   
+  },
+];
+
+
+
   // logo loop
   const techLogos = [
-  { node: <FaFacebook color="#737373" />, title: "React", href: "https://react.dev" },
-  { node: <SiMeta color="#737373" />, title: "Next.js", href: "https://nextjs.org" },
-  { node: <FaInstagram color="#737373" />, title: "TypeScript", href: "https://www.typescriptlang.org" },
-  { node: <SiAdobe color="#737373" />, title: "Tailwind CSS", href: "https://tailwindcss.com" },
-  { node: <FaTwitter color="#737373" />, title: "Tailwind CSS", href: "https://tailwindcss.com" },
-  { node: <SiFramer color="#737373" />, title: "Tailwind CSS", href: "https://tailwindcss.com" },
-];
+    { node: <FaFacebook color="#fb3c01" />, title: "React", href: "https://react.dev" },
+    { node: <SiMeta color="#fb3c01" />, title: "Next.js", href: "https://nextjs.org" },
+    { node: <FaInstagram color="#fb3c01" />, title: "TypeScript", href: "https://www.typescriptlang.org" },
+    { node: <SiAdobe color="#fb3c01" />, title: "Tailwind CSS", href: "https://tailwindcss.com" },
+    { node: <FaTwitter color="#fb3c01" />, title: "Tailwind CSS", href: "https://tailwindcss.com" },
+    { node: <SiFramer color="#fb3c01" />, title: "Tailwind CSS", href: "https://tailwindcss.com" },
+  ];
 
 
 
@@ -379,10 +475,24 @@ function Home() {
           {/* section4  */}
         </div  >
 
-        <div  className='py-30'>
-          <h1 className='text-neutral-500 font-extrabold underline underline-offset-8 text-center text-5xl'>Our Partners</h1>
+        
+        
+
+        <div className='flex flex-col rounded-2xl p-6 border border-neutral-900  bg-neutral-950 w-400 ms-10 mb-10 bg-neutral-00 h-fit' style={{ position: 'relative' }}>
+          <h1 className='text-7xl text-neutral-500 mb-10  font-extrabold  text-center'>Testimonials</h1>
+          <ChromaGrid
+            items={items1}
+            radius={300}
+            damping={0.45}
+            fadeOut={0.6}
+            ease="power3.out"
+          />
+        </div>
+
+        <div className='flex flex-col rounded-2xl p-4 border border-neutral-900  bg-neutral-950 w-400 ms-10 mb-10 bg-neutral-00 h-fit'>
+          <h1 className='text-orange-600 font-medium underline underline-offset-8 text-center text-5xl'>Our Partners</h1>
           {/* Basic horizontal loop */}
-          <div style={{height: '200px',position: 'relative',overflow: 'hidden',top:"100px" }}>
+          <div  style={{ height: '200px', position: 'relative', overflow: 'hidden', top: "70px" }}>
             <LogoLoop
               logos={techLogos}
               speed={50}
@@ -391,19 +501,21 @@ function Home() {
               gap={70}
               hoverSpeed={0}
               fadeOut
-                    fadeOutColor="#000000"
+              fadeOutColor="#000000"
               scaleOnHover
-            
+
               ariaLabel="Technology partners"
             />
           </div>
 
         </div>
+
         <div className='px-10'>
           <div style={{ height: '70px' }} className='flex items-center justify-center ms-100 rounded-lg border border-orange-600  mt-10 mb-25 w-200 md:mt-24'>
             <FlowingMenu items={demoItems} />
           </div>
         </div>
+
         <Footer />
       </div>
 
