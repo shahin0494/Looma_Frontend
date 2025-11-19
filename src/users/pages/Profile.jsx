@@ -29,7 +29,7 @@ const Profile = () => {
 
   const { userEditResponse, setUserEditResponse } = useContext(userUpdateContext)
 
-  console.log(userJobs);
+  console.log(purchaseJobs);
 
 
 
@@ -42,7 +42,7 @@ const Profile = () => {
       SetBio(user.bio)
       setJobType(user.jobType)
     }
-  }, [userEditResponse,deleteJobkStatus])
+  }, [userEditResponse, deleteJobkStatus])
 
 
   useEffect(() => {
@@ -50,6 +50,8 @@ const Profile = () => {
       getAllUserJobs()
     } else if (activeSection === "purchasedJobs" && purchasedSectionRef.current) {
       getAllUserUploadJobs()
+    } else if (activeSection === "soldJobs" && soldSectionRef.current) {
+      getAllUserBoughtJobs()
     }
   }, [token, userEditResponse])
 
@@ -105,26 +107,23 @@ const Profile = () => {
     }
   }
 
+  const getAllUserBoughtJobs = async () => {
+    const reqHeader = {
+      "Authorization": `Bearer ${token}`
+    }
+    try {
+      const result = await getAllUserPurchasedJobsAPI(reqHeader)
+      if (result.status == 200) {
+        setPurchaseJobs(result.data)
+      } else {
+        console.log(result);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
 
-  // Sample data for skills (uploaded jobs)
-  const uploadedJobs = [
-    { id: 1, title: 'Branding Design', description: 'Developed a full branding package for a startup.' },
-    { id: 2, title: 'Mobile App UI', description: 'Designed user-friendly mobile app interfaces.' },
-    { id: 3, title: 'Website Redesign', description: 'Led the redesign of a corporate website.' },
-  ]
-
-  // Sample data for sold jobs (added as new sample)
-  const soldJobs = [
-    { id: 1, title: 'Social Media Campaign', status: 'Completed' },
-    { id: 2, title: 'Product Packaging Design', status: 'Completed' },
-  ]
-
-  // Sample data for purchased jobs and status
-  const purchasedJobs = [
-    { id: 1, title: 'Logo Design', status: 'Completed' },
-    { id: 2, title: 'E-commerce Platform', status: 'In Progress' },
-  ]
 
   // Refs for GSAP animation
   const aboutSectionRef = useRef(null)
@@ -391,7 +390,7 @@ const Profile = () => {
                         key={index}
                         className="flex justify-between items-center p-4 bg-neutral-800 rounded-lg hover:bg-neutral-700 transition-colors"
                       >
-                        <span className="font-semibold text-white">{item?.Jobtitle}</span>
+                        <span className="font-semibold text-white">{item?.jobTitle}</span>
                         <span
                           className={`text-sm font-medium px-3 py-1 rounded-full`}
                         >

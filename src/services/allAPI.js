@@ -42,15 +42,21 @@ export const getAllUserUploadJobsAPI = async (reqHeader)=>{
     return await commonAPI("GET", `${SERVERURL}/user-jobs`, {}, reqHeader)
 }
 
-//  remove user upload books - called by profile component
+//  remove user jobs
 export const removeUserUploadJobsAPI = async (jobID, reqHeader) => {
     return await commonAPI("DELETE", `${SERVERURL}/user-jobs/${jobID}/remove`, {}, reqHeader)
 }
 
-// get all user bought books
+// get all user bought jobs
 export const getAllUserPurchasedJobsAPI = async (reqHeader) => {
     return await commonAPI("GET", `${SERVERURL}/user-bought-jobs`, {}, reqHeader)
 }
+
+//make payment
+export const makePaymentAPI = async (reqBody, reqHeader) => {
+    return await commonAPI("POST", `${SERVERURL}/make-payment`, reqBody, reqHeader)
+}
+
 
 // admin
  

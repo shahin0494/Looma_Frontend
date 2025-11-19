@@ -14,6 +14,10 @@ import ProjectAdmin from './admin/pages/ProjectAdmin'
 import SettingsAdmin from './admin/pages/SettingsAdmin'
 import Pnf from './pages/Pnf'
 import AddJob from './users/pages/AddJob'
+import PaymentSuccess from './users/pages/PaymentSuccess'
+import PaymentFailed from './users/pages/PaymentFailed'
+import HireModal from './users/pages/HireModal'
+
 
 
 const App = () => {
@@ -30,6 +34,10 @@ const App = () => {
         <Route path='/profile' element={<Profile />} />
         <Route path='/contact' element={<Contact />} />
         <Route path='/add-job' element={<AddJob />} />
+        <Route path='/payment-success' element={<PaymentSuccess />} />
+        <Route path='/payment-failed' element={<PaymentFailed />} />
+        <Route path='/hire-modal' element={<HireModal />} />
+        
 
         {/* Admin Routes */}
         <Route path='/admin-dashboard' element={<AdminDashboard />} />
