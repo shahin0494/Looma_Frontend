@@ -16,6 +16,7 @@ import LogoLoop from '../../reactbits/LogoLoop'
 import { SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiJavascript, SiFramer, SiMeta, SiAdobe } from 'react-icons/si';
 import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
 import ChromaGrid from '../../reactbits/ChromaGrid';
+import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 
 
 gsap.registerPlugin(ScrollTrigger);
@@ -23,7 +24,7 @@ gsap.registerPlugin(ScrollTrigger);
 function splitWords(text) {
   // Only return spans, no container, container will be added in render
   return text.split(" ").map((word, index) => (
-    <span key={index} className="inline-block opacity-0 blur-sm mr-1">
+    <span key={index} className="section2-word-span inline-block opacity-0 blur-sm mr-1 will-change-transform">
       {word}
     </span>
   ));
@@ -87,22 +88,22 @@ function Home() {
   useEffect(() => {
     if (section2Ref.current) {
       // Select all spans
-      const words = gsap.utils.toArray(section2Ref.current.querySelectorAll(".section2-words span"));
+      const words = gsap.utils.toArray(section2Ref.current.querySelectorAll(".section2-word-span"));
 
       // Ensure initial state
-      gsap.set(words, { opacity: 0, y: 20, filter: "blur(10px)" });
+      gsap.set(words, { opacity: 0, y: 30, filter: "blur(10px)" });
 
       // Animate on scroll
       gsap.to(words, {
         opacity: 1,
         y: 0,
         filter: "blur(0px)",
-        stagger: 0.04,
-        duration: 0.5,
-        ease: "power3.out",
+        stagger: 0.02,
+        duration: 0.8,
+        ease: "power4.out",
         scrollTrigger: {
           trigger: section2Ref.current,
-          start: "top 80%",
+          start: "top 70%",
           toggleActions: "play none none none",
         },
       });
@@ -278,6 +279,13 @@ const items1 = [
     { node: <SiFramer color="#fb3c01" />, title: "Tailwind CSS", href: "https://tailwindcss.com" },
   ];
 
+  const services = [
+    { icon: "fa-star", title: "Freelance", desc: "Expand your opportunities, connect with clients, and showcase your skills through a flexible experience.", color: "rgba(255, 215, 0, 0.2)" },
+    { icon: "fa-earth-asia", title: "Web Development", desc: "Build fast, responsive, and visually engaging websites that bring ideas to life with modern tools.", color: "rgba(0, 191, 255, 0.2)" },
+    { icon: "fa-film", title: "Video Editing", desc: "Enhance your edits with premium tools, exclusive effects, and round-the-clock support.", color: "rgba(255, 105, 180, 0.2)" },
+    { icon: "fa-code", title: "Software Dev", desc: "Accelerate your projects with exclusive tools, advanced features, and 24/7 expert support.", color: "rgba(144, 238, 144, 0.2)" },
+    { icon: "fa-ranking-star", title: "SEO", desc: "Boost your rankings with advanced SEO tools, exclusive insights, and 24/7 support.", color: "rgba(255, 140, 0, 0.2)" },
+  ];
 
 
   return (
@@ -360,50 +368,39 @@ const items1 = [
 
 
         {/* section 2 */}
-        <div className="flex flex-col md:flex-row h-210 border border-neutral-900  bg-neutral-900 w-400 ms-10 mb-30 bg-neutral-00">
-          {/* Left Side - Image with Overlay */}
-          <div className="relative w-full md:w-1/3 border-b rounded-4xl border-neutral-900  h-210 overf">
-            {/* Background Image */}
-            <div
-              className="absolute inset-0 bg-cover  border border-neutral-900 rounded-l-2xl bg-center"
-              style={{
-                backgroundImage: `url('./sec4.png')`,
-              }}
-            />
-
-            {/* Gradient Overlay */}
-            {/* <div className="absolute inset-0 bg-gradient-to-br from-black/40 to-transparent" /> */}
-          </div>
-
-          <div style={{
-
-          }} className="w-300 flex flex-col justify-between border border-neutral-800 rounded-r-2xl md:py-65  bg-neutral-900 bg-no-repeat  inset-0 bg-cover bg-center">
-            {/* Navigation */}
-            {/* Main Content */}
-            <div
-              ref={section2Ref}  >
-              <div id='chillax' className="section2-words ">
-                <h1 className="text-4xl md:text-4xl lg:text-4xl text-start font-extralight me-5  ms-5 leading-normal rounded-lg  text-orange-600">
-                  {splitWords(
-                    "Crafting  digital  experiences  that  marry  form  and  function.  I  specialise  in  creating  bespoke  solutions  that  honour  timeless  design  principles  whilst  embracing  modern  innovation.  Every  project  is undertaken  with  meticulous  attention  to  detail  and  a  genuine  passion  for  work  that  resonates."
-                  )}
-                </h1>
-                {/* <p className="text-sm md:text-sm text-gray-100 text-start max-w-xl mb-16">
-                    {splitWords(
-                      "LOOMA's work has been recognized globally with multiple awards, including FWA, CSS Design Awards, Awwwards and UX Design Award Berlin, reflecting our commitment to design excellence and innovative storytelling."
-                    )}
-                  </p> */}
-
-              </div>
+       <section className="relative py-32 px-6 md:px-12">
+          <div className="max-w-[90rem] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-0 rounded-3xl overflow-hidden border border-zinc-800 bg-zinc-900/50 backdrop-blur-sm">
+            
+            {/* Image Side */}
+            <div className="lg:col-span-5 relative min-h-[400px] lg:min-h-full overflow-hidden group">
+               <div 
+                 className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110"
+                 style={{ backgroundImage: `url('./wq.png')` }} 
+               />
+               {/* <div className="absolute inset-0 bg-[#fb3c01]/20 mix-blend-multiply" /> */}
+               {/* <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 to-transparent" /> */}
             </div>
 
-            {/* Bottom CTAs */}
-            <div className="flex gap-8">
+            {/* Text Side */}
+            <div className="lg:col-span-7 p-10 md:p-16 flex flex-col justify-center relative">
+                <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#fb3c01] to-transparent opacity-30" />
+                
+                <div ref={section2Ref}>
+                  <h2 className="text-3xl md:text-5xl font-light leading-tight text-zinc-200">
+                     {splitWords("Crafting digital experiences that marry form and function. I specialise in creating bespoke solutions that honour timeless design principles whilst embracing modern innovation. Every project is undertaken with meticulous attention to detail and a genuine passion for work that resonates.")}
+                  </h2>
+                </div>
+
+                <div className="mt-12 flex items-center gap-4 text-[#fb3c01] uppercase tracking-widest font-mono text-sm">
+                    <span className="w-12 h-[1px] bg-[#fb3c01]"></span>
+                    <span>Design Philosophy</span>
+                </div>
             </div>
           </div>
-        </div>
+        </section>
+
         {/* section 3 */}
-        <div style={{ color: "#fb3c01" }} ref={section3Ref} className='flex-col bg-neutral-900 border-neutral-800 border  gap-5 mt-10 w-400 h-170 mb-10 ms-10 rounded-4xl p-5 overflow-hidden'>
+        {/* <div style={{ color: "#fb3c01" }} ref={section3Ref} className='flex-col bg-neutral-900 border-neutral-800 border  gap-5 mt-10 w-400 h-170 mb-10 ms-10 rounded-4xl p-5 overflow-hidden'>
           <h1 className='text-3xl sm:text-4xl md:text-8xl  font-extralight px-5 md:px-10 py-5  mt-5'>Our services</h1> <hr className='mt-6 md:mt-2 text-orange-600 ms-5 md:ms-10 mr-15' />
           <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6 mt-10 px-5 md:px-10'>
             <SpotlightCard className="custom-spotlight-card" spotlightColor="rgba(255, 215, 0, 0.2)">
@@ -472,10 +469,44 @@ const items1 = [
               </div>
             </SpotlightCard>
           </div>
-          {/* section4  */}
-        </div  >
+          
+        </div  > */}
 
-        
+        <section className="py-20 px-6 md:px-12" ref={section3Ref}>
+          <div className="max-w-[90rem] border border-neutral-900 rounded-2xl p-8 mx-auto">
+            <div className="flex flex-col md:flex-row items-end justify-between mb-16 border-b border-zinc-800 pb-8">
+               <h1 className='text-6xl md:text-8xl font-black tracking-tighter text-zinc-600 uppercase'>
+                 Our <span className='text-transparent bg-clip-text bg-gradient-to-br from-orange-400 to-orange-600'>Services</span>
+               </h1>
+               <p className="text-[#fb3c01] font-mono mb-4 md:mb-2 text-lg">/// WHAT WE DO</p>
+            </div>
+
+            <div className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-6'>
+              {services.map((service, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1, duration: 0.5 }}
+                  viewport={{ once: true }}
+                >
+                  <SpotlightCard className="h-full bg-zinc-900/40 border border-zinc-800 hover:border-[#fb3c01]/50 transition-colors" spotlightColor={service.color}>
+                    <div className="p-8 flex flex-col h-full">
+                      <div className="w-12 h-12 rounded-full bg-zinc-800 flex items-center justify-center mb-6 text-[#fb3c01]">
+                        <i className={`fa-solid ${service.icon} text-xl`}></i>
+                      </div>
+                      <h2 className="text-xl font-bold text-white mb-3">{service.title}</h2>
+                      <p className="text-zinc-500 text-sm leading-relaxed flex-grow">
+                        {service.desc}
+                      </p>
+                      <div className="mt-6 w-full h-[1px] bg-zinc-800 group-hover:bg-[#fb3c01] transition-colors" />
+                    </div>
+                  </SpotlightCard>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
         
 
         <div className='flex flex-col rounded-2xl p-6 border border-neutral-900  bg-neutral-950 w-400 ms-10 mb-10 bg-neutral-00 h-fit' style={{ position: 'relative' }}>
