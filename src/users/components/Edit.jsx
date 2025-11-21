@@ -199,7 +199,7 @@ function Edit() {
 
             <button
                 onClick={() => setIsModalOpen(true)}
-                className="mt-2 text-3xl mb-10 ms-200 flex px-2 py-2 text-green-400 hover:bg-green-800/50 transition-colors rounded-lg font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-red-600"
+                className="mt-2 text-3xl mb-10 md:ms-200 flex px-2 py-2 text-green-400 bg-green-900/50  text-center hover:bg-green-800/50 transition-colors rounded-lg font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-red-600"
                 aria-label="Edit Profile"
             >
                <TbMoodEdit/>

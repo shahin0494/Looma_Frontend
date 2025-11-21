@@ -3,7 +3,11 @@
 * {
   font-family: 'Satoshi', sans-serif;
   
+}
 
+body {
+  background-color: #000000; /* The blink will be black */
+  
 }
 
 #vision {

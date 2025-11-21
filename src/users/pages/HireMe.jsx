@@ -12,6 +12,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import { getAllJobsAPI } from '../../services/allAPI'
 import { Equal } from 'lucide-react'
 import SERVERURL from '../../services/serverURL'
+import PageTransition from '../components/PageTransition'
 
 function HireMe() {
 
@@ -21,33 +22,50 @@ function HireMe() {
 
   console.log(jobs);
 
-  useEffect(() => {
+ 
+useEffect(() => {
     if (sessionStorage.getItem("token")) {
       const token = sessionStorage.getItem("token")
       setToken(token)
+
+      const user = JSON.parse(sessionStorage.getItem("user"))
+
+     
     }
-  }, [])
+  }, [token])
 
 
-  const baseItems = [
-    { label: 'Home', href: '/' },
-    { label: 'Hire', href: '/Hire-me' },
-    { label: 'Dashboard', href: '/Dashboard' },
-    { label: 'Contact', href: '/Contact' },
-  ];
-
-  const items = token
-    ? [...baseItems, { label: 'Profile', href: '/profile' }] // user logged in
-    : [...baseItems, { label: 'Login', href: '/Login' }]; // user logged out
-
-
-  const logout = () => {
+   const logout = () => {
     sessionStorage.clear()
     setToken("")
     setUserDp("")
     setDropDownStatus(false)
     navigate("/")
   }
+
+
+
+
+// Base items (always visible)
+  const baseItems = [
+    { label: 'Home', href: '/' , navigate:"/"},
+    { label: 'Hire', href: '/Hire-me', navigate:"Hire-me" },
+    { label: 'Dashboard', href: '/Dashboard' },
+    { label: 'Contact', href: '/Contact' },
+  ];
+
+  // Add login only if no token
+  const items = token
+    ? [
+      ...baseItems,
+      { label: 'Profile', href: '/profile' },
+      { label: 'Logout', onClick: logout }   // 👈 ADD THIS
+    ]
+    : [
+      ...baseItems,
+      { label: 'Login', href: '/Login' }
+    ];
+
 
   useEffect(() => {
     if (sessionStorage.getItem("token")) {
@@ -79,30 +97,13 @@ function HireMe() {
 
 
   return (
-    <>
-      <div className='bg-neutral-950'>
-        <Header
-          logoAlt="Company Logo"
-          items={items}
-          activeHref="/Hire-me"
-          className="custom-nav"
-          ease="power2.easeOut"
-          baseColor="#000000"
-          pillColor="#fb3c01"
-          hoveredPillTextColor="#fb3c01"
-          pillTextColor="#ffffff"
-        />
-        {token && (
-          <button
-            onClick={logout}
-            className='px-4 py-1.5 z-50 mt-4 bg-black ms-385 text-orange-600 hover:bg-orange-600/20 border-orange-600 border-2 rounded-4xl font-bold transition-all duration-200'
-          >
-            LOGOUT
-          </button>
-        )}
+    <PageTransition>
+      <div className="bg-black mb-5 ">
+        {/* Try: 'glass', 'liquid', 'architect', 'luminous', 'island' */}
+        <Header variant="glass" items={items} />
       </div>
       {token ?
-        <div className='w-full  px-10  bg-neutral-950 h-auto'>
+        <div className='w-full  md:px-10 px-5  bg-neutral-950 h-auto'>
           {/* Page Title */}
           <h1 h1 className='text-7xl md:text-9xl pt-20 text-neutral-500 font-semibold text-center'>For You</h1>
           {/* Centered Search Bar */}
@@ -125,14 +126,14 @@ function HireMe() {
 
 
             {/* Job Listings */}
-            <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12">
+            <div className="flex-1 grid grid-cols-1 md:grid-cols-2 md:gap-x-8 gap-y-12">
               {/* Example Job Card */}
               {
                 jobs.length > 0 ?
                   jobs.map(job => (
                     <motion.div
                       key={job?._id}
-                      className="relative border w-300 border-neutral-800 rounded-xl p-8 sm:p-10 bg-neutral-900/30 text-white max-w-3xl mx-auto backdrop-blur-sm transition-all duration-500 hover:bg-neutral-900/80 hover:shadow-[0_0_40px_-15px_rgba(255,255,255,0.05)]" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: 'easeOut' }} hidden={job?.jobStatus == "pending" || job?.jobStatus == "sold"}>
+                      className="relative border md:w-300 w-87 border-neutral-800 rounded-xl p-4 sm:p-10 bg-neutral-900/30 text-white max-w-3xl md:mx-auto backdrop-blur-sm transition-all duration-500 hover:bg-neutral-900/80 hover:shadow-[0_0_40px_-15px_rgba(255,255,255,0.05)]" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: 'easeOut' }} hidden={job?.jobStatus == "pending" || job?.jobStatus == "sold"}>
                       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6">
                         <div className="flex items-center gap-4">
                           <img
@@ -233,7 +234,7 @@ function HireMe() {
         theme="colored"
       // transition={Slide}
       />
-    </>
+    </PageTransition>
   )
 }
 

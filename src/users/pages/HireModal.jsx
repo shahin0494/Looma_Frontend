@@ -1,8 +1,9 @@
 import React from 'react'
+import PageTransition from '../components/PageTransition'
 
 function HireModal() {
   return (
-    <div>HireModal</div>
+    <PageTransition>HireModal</PageTransition>
   )
 }
 

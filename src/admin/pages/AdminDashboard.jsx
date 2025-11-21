@@ -3,6 +3,7 @@ import Dock from '../components/FreelanceDashboardHeader'
 import Footer from '../../component/Footer';
 import { useNavigate } from 'react-router-dom';
 import { DollarSign, Activity, Briefcase, Smile, Star, ClipboardClock, Telescope, Baby, UserRound, Ratio, SquareChartGantt, House, Wrench } from 'lucide-react';
+import PageTransition from '../../users/components/PageTransition';
 
 
 
@@ -109,73 +110,68 @@ function Dashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white px-8">
-
-      <Dock
-        items={items}
-        panelHeight={68}
-        baseItemSize={50}
-        magnification={70}
-      />
-
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.1 }}
-        className="mb-5 mt-3"
-      >
-
-        <h1 className="text-6xl ms-2  font-extralight text-neutral-200 py-3 px-2 tracking-tight ">Admin Dashboard</h1>
-
-        <hr className="mt-5 text-neutral-800" />
-        {/* <p className="text-white/50 text-sm font-light">Welcome back! Here's what’s happening with your freelance work.</p> */}
-      </motion.div>
-
-      {/* cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-        {stats.map((stat, index) => (
-          <StatCard key={stat.title} {...stat} delay={0.4 * index} />
-        ))}
+    <PageTransition>
+      <div className="min-h-screen bg-black text-white px-8">
+        <Dock
+          items={items}
+          panelHeight={68}
+          baseItemSize={50}
+          magnification={70}
+        />
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.1 }}
+          className="mb-5 mt-3"
+        >
+          <h1 className="text-6xl ms-2  font-extralight text-neutral-200 py-3 px-2 tracking-tight ">Admin Dashboard</h1>
+          <hr className="mt-5 text-neutral-800" />
+          {/* <p className="text-white/50 text-sm font-light">Welcome back! Here's what’s happening with your freelance work.</p> */}
+        </motion.div>
+        {/* cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+          {stats.map((stat, index) => (
+            <StatCard key={stat.title} {...stat} delay={0.4 * index} />
+          ))}
+        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        >
+          {/* Quick Actions
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-md">
+            <h2 className="text-lg font-light mb-4 text-white/90">Quick Actions</h2>
+            <div className="grid grid-cols-2 gap-4">
+              <button className="bg-white/10 hover:bg-white/20 transition-all rounded-xl py-3 text-sm text-white/80 font-light">Update Portfolio</button>
+              <button className="bg-white/10 hover:bg-white/20 transition-all rounded-xl py-3 text-sm text-white/80 font-light">Browse Jobs</button>
+              <button className="bg-white/10 hover:bg-white/20 transition-all rounded-xl py-3 text-sm text-white/80 font-light">Edit Profile</button>
+              <button className="bg-white/10 hover:bg-white/20 transition-all rounded-xl py-3 text-sm text-white/80 font-light">Set Availability</button>
+            </div>
+          </div> */}
+          {/* Notifications
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-md">
+            <h2 className="text-lg font-light mb-4 text-white/90">Notifications</h2>
+            <div className="space-y-3">
+              <div className="flex items-center justify-between bg-white/10 hover:bg-white/15 transition-all rounded-xl p-3">
+                <p className="text-sm text-white/80">Project Completed</p>
+                <span className="text-xs text-emerald-400">2h ago</span>
+              </div>
+              <div className="flex items-center justify-between bg-white/10 hover:bg-white/15 transition-all rounded-xl p-3">
+                <p className="text-sm text-white/80">Payment Due</p>
+                <span className="text-xs text-amber-400">3 days left</span>
+              </div>
+              <div className="flex items-center justify-between bg-white/10 hover:bg-white/15 transition-all rounded-xl p-3">
+                <p className="text-sm text-white/80">New Message from Client</p>
+                <span className="text-xs text-blue-400">Just now</span>
+              </div>
+            </div>
+          </div> */}
+        </motion.div>
+        <Footer />
       </div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.6 }}
-        className="grid grid-cols-1 md:grid-cols-2 gap-6"
-      >
-        {/* Quick Actions
-        <div className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-md">
-          <h2 className="text-lg font-light mb-4 text-white/90">Quick Actions</h2>
-          <div className="grid grid-cols-2 gap-4">
-            <button className="bg-white/10 hover:bg-white/20 transition-all rounded-xl py-3 text-sm text-white/80 font-light">Update Portfolio</button>
-            <button className="bg-white/10 hover:bg-white/20 transition-all rounded-xl py-3 text-sm text-white/80 font-light">Browse Jobs</button>
-            <button className="bg-white/10 hover:bg-white/20 transition-all rounded-xl py-3 text-sm text-white/80 font-light">Edit Profile</button>
-            <button className="bg-white/10 hover:bg-white/20 transition-all rounded-xl py-3 text-sm text-white/80 font-light">Set Availability</button>
-          </div>
-        </div> */}
-
-        {/* Notifications
-        <div className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-md">
-          <h2 className="text-lg font-light mb-4 text-white/90">Notifications</h2>
-          <div className="space-y-3">
-            <div className="flex items-center justify-between bg-white/10 hover:bg-white/15 transition-all rounded-xl p-3">
-              <p className="text-sm text-white/80">Project Completed</p>
-              <span className="text-xs text-emerald-400">2h ago</span>
-            </div>
-            <div className="flex items-center justify-between bg-white/10 hover:bg-white/15 transition-all rounded-xl p-3">
-              <p className="text-sm text-white/80">Payment Due</p>
-              <span className="text-xs text-amber-400">3 days left</span>
-            </div>
-            <div className="flex items-center justify-between bg-white/10 hover:bg-white/15 transition-all rounded-xl p-3">
-              <p className="text-sm text-white/80">New Message from Client</p>
-              <span className="text-xs text-blue-400">Just now</span>
-            </div>
-          </div>
-        </div> */}
-      </motion.div>
-      <Footer />
-    </div>
+    </PageTransition>
   );
 }
 
