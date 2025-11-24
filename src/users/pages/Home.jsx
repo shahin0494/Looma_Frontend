@@ -304,7 +304,7 @@ function Home() {
   return (
     <PageTransition>
       <ClickSpark
-        sparkColor='#fcb301'
+        sparkColor='#ffffff'
         sparkSize={10}
         sparkRadius={15}
         sparkCount={8}
