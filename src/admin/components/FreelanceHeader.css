@@ -3,6 +3,7 @@
   display: flex;
   max-width: 100%;
   align-items: center;
+  
 }
 
 .dock-panel {
@@ -19,6 +20,25 @@
   border: 1px solid #222;
   padding: 0 0.5rem 0.5rem;
 }
+
+@media (max-width: 640px) {
+  .dock-panel {
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    
+  }
+}
+
+
+@media (max-width: 480px) {
+  .dock-outer {
+   margin-bottom: 45px;
+    
+  }
+}
+
+
 
 .dock-item {
   position: relative;

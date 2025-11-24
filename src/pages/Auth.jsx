@@ -112,7 +112,7 @@ function Auth({ register = false }) {
       console.log(result);
 
       if (result.status == 200) {
-        alert("login successfull")
+       toast.success("Login Successfull")
         sessionStorage.setItem("user", JSON.stringify(result.data.user))
         sessionStorage.setItem("token", result.data.token)
 

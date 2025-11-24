@@ -95,11 +95,11 @@ const Profile = () => {
     if (activeSection == "uploadedJobs" && uploadedSectionRef.current) {
       getAllUserJobs()
     } else if (activeSection === "purchasedJobs" && purchasedSectionRef.current) {
-      getAllUserUploadJobs()
+     getAllUserBoughtJobs();
     } else if (activeSection === "soldJobs" && soldSectionRef.current) {
       getAllUserBoughtJobs()
     }
-  }, [token, userEditResponse])
+  }, [token, userEditResponse,activeSection])
 
 
   const getAllUserUploadJobs = async () => {
@@ -418,14 +418,34 @@ const Profile = () => {
                       purchaseJobs.map((item, index) => (
                         <li
                           key={index}
-                          className="flex justify-between items-center p-4 bg-neutral-800 rounded-lg hover:bg-neutral-700 transition-colors"
+                          className="p-5 bg-neutral-800 rounded-xl hover:bg-neutral-700/40 transition-all duration-300"
                         >
-                          <span className="font-semibold text-white">{item?.jobTitle}</span>
-                          <span
-                            className={`text-sm font-medium px-3 py-1 rounded-full`}
-                          >
-                            {item.jobStatus}
-                          </span>
+                          <div className="flex flex-col gap-1">
+                            <h3 className="text-3xl font-bold text-white">{item?.username}</h3> <hr className='text-neutral-700 my-3' />
+                            <h3 className="text-lg font-bold text-neutral-300">{item?.jobTitle}</h3>
+                            
+                            {item?.summary && (
+                              <p className="text-neutral-400 text-sm text-justify leading-relaxed">
+                                {item.specializations}
+                              </p>
+                            )}
+                            
+                            {item?.price && (
+                              <p className="text-neutral-300 text-md">
+                                <span className="font-semibold text-white">Amount Paid:</span> ₹{item.price}
+                              </p>
+                            )}
+                            
+                            {item?.freelancer && (
+                              <p className="text-neutral-300 text-md">
+                                <span className="font-semibold text-white">Freelancer:</span> {item.freelancer}
+                              </p>
+                            )}
+                            
+                            <div className="flex items-center justify-between mt-2">
+                             
+                            </div>
+                          </div>
                         </li>
                       ))
                       :

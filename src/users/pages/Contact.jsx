@@ -98,7 +98,7 @@ const ContactGrid = () => {
                   className="text-5xl md:text-7xl font-light tracking-tight text-orange-600 leading-[1.1]"
                   variants={textReveal}
                 >
-                  <span className="text-neutral-500">Deploy.</span> Scale.
+                  <span className="text-neutral-500 ">Deploy.</span> Scale.
                 </motion.h1>
               </div>
 
@@ -154,7 +154,7 @@ const ContactGrid = () => {
 
 // --- Sub Components for Effects ---
 
-const textReveal = {
+export const textReveal = {
   hidden: { y: "100%" },
   visible: {
     y: 0,

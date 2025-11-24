@@ -9,7 +9,6 @@ import Profile from './users/pages/Profile'
 import Auth from './pages/Auth'
 import AdminDashboard from './admin/pages/AdminDashboard'
 import ClientAdmin from './admin/pages/ClientsAdmin'
-import PortfolioAdmin from './admin/pages/PortfolioAdmin'
 import ProjectAdmin from './admin/pages/ProjectAdmin'
 import SettingsAdmin from './admin/pages/SettingsAdmin'
 import Pnf from './pages/Pnf'
@@ -44,7 +43,6 @@ const App = () => {
           {/* Admin Routes */}
           <Route path='/admin-dashboard' element={<AdminDashboard />} />
           <Route path='/admin-clients' element={<ClientAdmin />} />
-          <Route path='/admin-portfolio' element={<PortfolioAdmin />} />
           <Route path='/admin-projects' element={<ProjectAdmin />} />
           <Route path='/admin-settings' element={<SettingsAdmin />} />
           {/* 404 */}

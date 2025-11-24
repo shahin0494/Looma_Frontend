@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useContext } from "react";
 import gsap from "gsap";
 import Footer from '../../component/Footer';
 import { useNavigate } from 'react-router-dom';
-import { UserRound, Ratio, SquareChartGantt, House, Wrench } from 'lucide-react';
+import { UserRound, Ratio, SquareChartGantt, House, Wrench, Power } from 'lucide-react';
 import Dock from "../components/FreelanceDashboardHeader";
 import { toast, ToastContainer } from "react-toastify";
 import { updateAdminProfileAPI } from "../../services/allAPI";
@@ -19,7 +19,8 @@ const SettingsAdmin = () => {
     profileImage: "",
     bio: "",
     role: ""
-  }); const [existingProfilePic, setExistingProfilePic] = useState("")
+  });
+  const [existingProfilePic, setExistingProfilePic] = useState("")
   const [preview, setPreview] = useState("")
   const [token, setToken] = useState("")
   const { adminEditResponse, setAdminEditResponse } = useContext(adminUpdateContext)
@@ -103,17 +104,6 @@ const SettingsAdmin = () => {
       }
     }
   }
-
-
-  const navigate = useNavigate();
-
-  const items = [
-    { icon: <House size={18} color='#A3A3A3' />, label: 'Dashboard', onClick: () => navigate('/admin-dashboard') },
-    { icon: <UserRound size={18} color='#A3A3A3' />, label: 'Clients', onClick: () => navigate('/admin-clients') },
-    { icon: <Ratio size={18} color='#A3A3A3' />, label: 'Portfolio', onClick: () => navigate('/admin-portfolio') },
-    { icon: <SquareChartGantt size={18} color='#A3A3A3' />, label: 'Projects', onClick: () => navigate('/admin-projects') },
-    { icon: <Wrench size={18} color="#991B1B" />, label: 'Settings', onClick: () => navigate('/admin-settings') },
-  ];
 
   // Profile state
   const [profile, setProfile] = useState({
@@ -213,23 +203,50 @@ const SettingsAdmin = () => {
     profileImage: profile.profileImage
   });
 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (sessionStorage.getItem("token")) {
+      const token = sessionStorage.getItem("token")
+      setToken(token)
+    }
+  }, [token])
+
+  const logout = () => {
+    sessionStorage.clear()
+    setToken("")
+    navigate("/")
+  }
+
+
+  const items = [
+    { icon: <House size={18} color='#A3A3A3' />, label: 'Dashboard', onClick: () => navigate('/admin-dashboard') },
+    { icon: <UserRound size={18} color='#A3A3A3' />, label: 'Clients', onClick: () => navigate('/admin-clients') },
+    { icon: <SquareChartGantt size={18} color='#A3A3A3' />, label: 'Projects', onClick: () => navigate('/admin-projects') },
+    { icon: <Wrench size={18} color="#00E5FF" />, label: 'Settings', onClick: () => navigate('/admin-settings') },
+    { icon: <Power size={18} color='red' />, label: 'Logout', onClick: logout },
+  ];
+
 
 
   return (
     <PageTransition>
       <div className="h-screen bg-black text-white px-8 ">
-      
+
         {/* Header */}
         <div
           ref={headerRef}
-          className="ms-3 mt- mb-8"
-        >
-          <Dock
-          items={items}
-          panelHeight={68}
-          baseItemSize={50}
-          magnification={70}
-        />
+          className="ms-3  mb-8" >
+          <div className="flex justify-start md:justify-start lg:justify-start 
+               mb-4
+               sm:justify-center sm:mb-6">
+            <Dock
+              items={items}
+              panelHeight={68}
+              baseItemSize={50}
+              magnification={70}
+            />
+          </div>
           <h2 className="text-6xl font-extralight tracking-tight text-neutral-200 mt-2 mb-3">
             Admin Settings
           </h2>
@@ -241,17 +258,17 @@ const SettingsAdmin = () => {
           ref={profileRef}
           className="w-full mx-auto mb-16"
         >
-          <div className="relative overflow-hidden  rounded-3xl bg-gradient-to-br from-neutral-900/50 to-neutral-950/50 border border-white/5 backdrop-blur-xl">
-             {/* <div className="absolute  inset-0 w-full bg-gradient-to-tr from-emerald-500/5 via-transparent to-transparent pointer-events-none"></div> */}
-            <div className="relative  p-12">
+          <div className="relative overflow-hidden  rounded-xl bg-gradient-to-br from-neutral-900/50 to-neutral-950/50 border border-white/5 backdrop-blur-xl">
+            {/* <div className="absolute  inset-0 w-full bg-gradient-to-tr from-emerald-500/5 via-transparent to-transparent pointer-events-none"></div> */}
+            <div className="relative  md:p-12">
               <div className="flex flex-col md:flex-row gap-12 items-start">
                 <div className="relative group">
                   {/* <div className="absolute inset-0  bg-gradient-to-br from-emerald-400/20 to-cyan-400/20 rounded-full blur-2xl group-hover:blur-3xl transition-all duration-500"></div> */}
                   {
                     existingProfilePic ?
-                      <img className='border border-slate-800 ' src={preview ? preview : `${SERVERURL}/uploads/${existingProfilePic}`} alt='user admin logo' style={{ width: '400px', height: '400px', borderRadius: '2%' }} />
+                      <img className='border border-slate-800 w-full max-w-xs md:max-w-sm lg:max-w-md h-auto object-cover rounded-md' src={preview ? preview : `${SERVERURL}/uploads/${existingProfilePic}`} alt='user admin logo'  />
                       :
-                      <img className='border border-slate-400 ' src={preview ? preview : 'https://static.vecteezy.com/system/resources/previews/013/716/222/non_2x/coin-of-alexander-the-great-vintage-illustration-free-vector.jpg'} alt='user admin logo' style={{ width: '200px', height: '100px', borderRadius: '50%' }} />
+                      <img className='border border-slate-400 w-full max-w-xs md:max-w-sm lg:max-w-md h-auto object-cover rounded-md' src={preview ? preview : 'https://static.vecteezy.com/system/resources/previews/013/716/222/non_2x/coin-of-alexander-the-great-vintage-illustration-free-vector.jpg'} alt='user admin logo'  />
                   }
                 </div>
                 <div className="flex-1 space-y-8">

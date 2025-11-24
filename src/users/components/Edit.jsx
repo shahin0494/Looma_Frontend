@@ -65,6 +65,7 @@ function Edit() {
                     if (result.status == 200) {
                         sessionStorage.setItem("user", JSON.stringify(result.data))
                         handleReset()
+                        isModalOpen(false)
                         setUserEditResponse(result.data)
                     } else {
                         toast.error("something went wrong")

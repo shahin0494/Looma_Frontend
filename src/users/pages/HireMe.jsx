@@ -13,6 +13,7 @@ import { getAllJobsAPI } from '../../services/allAPI'
 import { Equal } from 'lucide-react'
 import SERVERURL from '../../services/serverURL'
 import PageTransition from '../components/PageTransition'
+import { textReveal } from './Contact'
 
 function HireMe() {
 
@@ -22,20 +23,20 @@ function HireMe() {
 
   console.log(jobs);
 
- 
-useEffect(() => {
+
+  useEffect(() => {
     if (sessionStorage.getItem("token")) {
       const token = sessionStorage.getItem("token")
       setToken(token)
 
       const user = JSON.parse(sessionStorage.getItem("user"))
 
-     
+
     }
   }, [token])
 
 
-   const logout = () => {
+  const logout = () => {
     sessionStorage.clear()
     setToken("")
     setUserDp("")
@@ -46,10 +47,10 @@ useEffect(() => {
 
 
 
-// Base items (always visible)
+  // Base items (always visible)
   const baseItems = [
-    { label: 'Home', href: '/' , navigate:"/"},
-    { label: 'Hire', href: '/Hire-me', navigate:"Hire-me" },
+    { label: 'Home', href: '/', navigate: "/" },
+    { label: 'Hire', href: '/Hire-me', navigate: "Hire-me" },
     { label: 'Dashboard', href: '/Dashboard' },
     { label: 'Contact', href: '/Contact' },
   ];
@@ -95,6 +96,28 @@ useEffect(() => {
     }
   }
 
+  const textReveal = {
+    hidden: { y: "100%", opacity: 0 },
+    visible: {
+      y: "0%",
+      opacity: 1,
+      transition: {
+        duration: 0.8,
+        ease: [0.25, 1, 0.5, 1] // Custom cubic-bezier for a "luxury" feel
+      }
+    }
+  };
+
+  const containerControls = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15, // Delays the next line by 0.15s
+        delayChildren: 0.2     // Waits 0.2s before starting
+      }
+    }
+  };
 
   return (
     <PageTransition>
@@ -133,7 +156,7 @@ useEffect(() => {
                   jobs.map(job => (
                     <motion.div
                       key={job?._id}
-                      className="relative border md:w-300 w-87 border-neutral-800 rounded-xl p-4 sm:p-10 bg-neutral-900/30 text-white max-w-3xl md:mx-auto backdrop-blur-sm transition-all duration-500 hover:bg-neutral-900/80 hover:shadow-[0_0_40px_-15px_rgba(255,255,255,0.05)]" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: 'easeOut' }} hidden={job?.jobStatus == "pending" || job?.jobStatus == "sold"}>
+                      className="relative border md:w-300 w-87 border-neutral-800 rounded-xl p-4 sm:p-10 bg-neutral-900/30 text-white max-w-3xl md:mx-auto backdrop-blur-sm transition-all duration-500 hover:bg-neutral-900/80 hover:shadow-[0_0_40px_-15px_rgba(255,255,255,0.05)]" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, ease: 'easeOut' }} hidden={job?.jobStatus == "pending" || job?.status == "sold"}>
                       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-6">
                         <div className="flex items-center gap-4">
                           <img
@@ -218,7 +241,29 @@ useEffect(() => {
 
         </div >
         :
-        <p>please login </p>
+        <section className="min-h-130 flex items-center justify-center bg-neutral-950  p-8">
+          <div className=" w-full  pl-8 text-center py-15">
+
+            {/* 2. The Motion Parent */}
+            <motion.div
+             initial="hidden"
+              animate="visible"
+              variants={{
+                visible: { transition: { staggerChildren: 0.5 } }
+              }}
+              >
+              {/* Line 1 */}
+              <div className="overflow-hidden py-5"> {/* <-- The Mask */}
+                <motion.h1
+                  className="text-5xl md:text-8xl font-light tracking-tight text-neutral-200 "
+                  variants={textReveal}
+                >
+                  Please   <span className="text-orange-500">Login</span> to continue
+                </motion.h1>
+              </div>
+            </motion.div>
+          </div>
+        </section>
       }
       <Footer />
       <ToastContainer

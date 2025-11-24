@@ -2,14 +2,13 @@ import { motion } from 'framer-motion';
 import Dock from '../components/FreelanceDashboardHeader'
 import Footer from '../../component/Footer';
 import { useNavigate } from 'react-router-dom';
-import { DollarSign, Activity, Briefcase, Smile, Star, ClipboardClock, Telescope, Baby, UserRound, Ratio, SquareChartGantt, House, Wrench } from 'lucide-react';
+import { DollarSign, Activity, Briefcase, Smile, Star, ClipboardClock, Telescope, Baby, UserRound, Ratio, SquareChartGantt, House, Wrench, Power } from 'lucide-react';
 import PageTransition from '../../users/components/PageTransition';
-
-
-
+import { useState, useEffect } from 'react';
 
 
 const StatCard = ({ title, value, icon, trend, delay = 0, gradient }) => {
+
   return (
 
     <motion.div
@@ -39,13 +38,29 @@ const StatCard = ({ title, value, icon, trend, delay = 0, gradient }) => {
 
 function Dashboard() {
 
+  const [token, setToken] = useState("")
+
+  useEffect(() => {
+    if (sessionStorage.getItem("token")) {
+      const token = sessionStorage.getItem("token")
+      setToken(token)
+    }
+  }, [token])
+
+  const logout = () => {
+    sessionStorage.clear()
+    setToken("")
+    navigate("/")
+  }
+
   const navigate = useNavigate();
+
   const items = [
     { icon: <House size={18} color='#BEF264' />, label: 'Dashboard', onClick: () => navigate('/admin-dashboard') },
     { icon: <UserRound size={18} color='#A3A3A3' />, label: 'Clients', onClick: () => navigate('/admin-clients') },
-    { icon: <Ratio size={18} color='#A3A3A3' />, label: 'Portfolio', onClick: () => navigate('/admin-portfolio') },
     { icon: <SquareChartGantt size={18} color='#A3A3A3' />, label: 'Projects', onClick: () => navigate('/admin-projects') },
     { icon: <Wrench size={18} color='#A3A3A3' />, label: 'Settings', onClick: () => navigate('/admin-settings') },
+    { icon: <Power size={18} color='red' />, label: 'Logout', onClick: logout },
   ];
 
 
@@ -112,17 +127,19 @@ function Dashboard() {
   return (
     <PageTransition>
       <div className="min-h-screen bg-black text-white px-8">
-        <Dock
-          items={items}
-          panelHeight={68}
-          baseItemSize={50}
-          magnification={70}
-        />
+        <div className=''>
+          <Dock
+            items={items}
+            panelHeight={68}
+            baseItemSize={50}
+            magnification={70}
+          />
+        </div>
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.1 }}
-          className="mb-5 mt-3"
+          className="mb-5 mt-3 "
         >
           <h1 className="text-6xl ms-2  font-extralight text-neutral-200 py-3 px-2 tracking-tight ">Admin Dashboard</h1>
           <hr className="mt-5 text-neutral-800" />

@@ -3,7 +3,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { addJobsAPI } from "../../services/allAPI";
 import { ToastContainer, toast } from 'react-toastify'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaArrowRight, FaChevronLeft } from "react-icons/fa";
 import { Check, RotateCcw } from 'lucide-react';
 import { LuRotateCcw } from "react-icons/lu";
@@ -27,6 +27,7 @@ function AddJob() {
     const [previewList, setPreviewList] = useState([])
     const [profilePreviewList, setProfilePreviewList] = useState([])
     const [backgroundPreviewList, setBackgroundPreviewList] = useState([])
+    const navigate = useNavigate()
 
     console.log(jobDetails);
 
@@ -58,11 +59,11 @@ function AddJob() {
     }, []);
 
     // Skill helpers
-   const handleSkillChange = (index, field, value) => {
-  const updatedSkills = [...jobDetails.technicalSkills];
-  updatedSkills[index][field] = value;
-  setJobDetails({ ...jobDetails, technicalSkills: updatedSkills });
-};
+    const handleSkillChange = (index, field, value) => {
+        const updatedSkills = [...jobDetails.technicalSkills];
+        updatedSkills[index][field] = value;
+        setJobDetails({ ...jobDetails, technicalSkills: updatedSkills });
+    };
     const addSkillGroup = () => {
         const updatedSkills = [
             ...jobDetails.technicalSkills,
@@ -80,6 +81,18 @@ function AddJob() {
 
     const handleFileUpload = (e, key) => {
         const files = Array.from(e.target.files);
+
+        // ⭐ NEW: Limit works images to max 10
+        if (key === "works") {
+            const existingCount = jobDetails.works.length;
+            const newCount = files.length;
+
+            if (existingCount + newCount > 10) {
+                toast.error("You can only upload a maximum of 10 images.");
+                e.target.value = "";
+                return;
+            }
+        }
 
         // Create preview URLs
         const newPreviews = files.map(file => URL.createObjectURL(file));
@@ -196,120 +209,119 @@ function AddJob() {
     // }
 
 
-const flattenedTechnicalSkills =
-  Array.isArray(jobDetails.technicalSkills) && jobDetails.technicalSkills.length > 0
-    ? jobDetails.technicalSkills[0]
-    : { category: "", skills: [] };
+    const flattenedTechnicalSkills =
+        Array.isArray(jobDetails.technicalSkills) && jobDetails.technicalSkills.length > 0
+            ? jobDetails.technicalSkills[0]
+            : { category: "", skills: [] };
 
     const handleJobSubmit = async () => {
-  const {
-    username,
-    jobTitle,
-    specializations,
-    fees,
-    availability,
-    location,
-    summary,
-    experience,
-    technicalSkills,
-    email,
-    phone,
-    website,
-    github,
-    linkedin,
-    twitter,
-    portfolio,
-    works,
-    status,
-    profilePhoto,
-    backgroundPhoto,
-  } = jobDetails;
+        const {
+            username,
+            jobTitle,
+            specializations,
+            fees,
+            availability,
+            location,
+            summary,
+            experience,
+            technicalSkills,
+            email,
+            phone,
+            website,
+            github,
+            linkedin,
+            twitter,
+            portfolio,
+            works,
+            profilePhoto,
+            backgroundPhoto,
+        } = jobDetails;
 
-  // ✅ Validate all required fields
-  if (
-    !username.trim() ||
-    !jobTitle.trim() ||
-    !fees.trim() ||
-    !availability.trim() ||
-    !location.trim() ||
-    !summary.trim() ||
-    !email.trim() ||
-    !phone.trim() ||
-    !website.trim() ||
-    !github.trim() ||
-    !linkedin.trim() ||
-    !twitter.trim() ||
-    !portfolio.trim() ||
-    specializations.length === 0 ||
-    experience.length === 0 ||
-    technicalSkills.length === 0 ||
-    !technicalSkills[0].category.trim() ||
-    technicalSkills[0].skills.length === 0 ||
-    works.length === 0 ||
-    profilePhoto.length === 0 ||
-    backgroundPhoto.length === 0
-  ) {
-    toast.info("Please fill all required fields properly");
-    return;
-  }
+        // ✅ Validate all required fields
+        if (
+            !username.trim() ||
+            !jobTitle.trim() ||
+            !fees.trim() ||
+            !availability.trim() ||
+            !location.trim() ||
+            !summary.trim() ||
+            !email.trim() ||
+            !phone.trim() ||
+            !website.trim() ||
+            !github.trim() ||
+            !linkedin.trim() ||
+            !twitter.trim() ||
+            !portfolio.trim() ||
+            specializations.length === 0 ||
+            technicalSkills.length === 0 ||
+            !technicalSkills[0].category.trim() ||
+            technicalSkills[0].skills.length === 0 ||
+            works.length === 0 ||
+            profilePhoto.length === 0 
+        ) {
+            toast.info("Please fill all required fields properly");
+            return;
+        }
 
-  try {
-    const reqHeader = {
-      "Authorization": `Bearer ${token}`,
+        try {
+            const reqHeader = {
+                "Authorization": `Bearer ${token}`,
+            };
+
+            const reqBody = new FormData();
+
+            // ✅ [ADD HERE] → Get user's email from session storage
+            const user = JSON.parse(sessionStorage.getItem("user"));
+            const userMail = user?.email || "";
+            reqBody.append("userMail", userMail);
+            // 🔺 this line makes sure backend receives the uploader’s email
+
+            // ✅ Append image files first — multer must receive these exact names
+            profilePhoto.forEach((file) => reqBody.append("profilePhoto", file));
+            backgroundPhoto.forEach((file) => reqBody.append("backgroundPhoto", file));
+            works.forEach((file) => reqBody.append("works", file));
+
+            // ✅ Append normal text + JSON fields
+            reqBody.append("username", username);
+            reqBody.append("jobTitle", jobTitle);
+            reqBody.append("fees", fees);
+            reqBody.append("availability", availability);
+            reqBody.append("location", location);
+            reqBody.append("summary", summary);
+            reqBody.append("email", email);
+            reqBody.append("phone", phone);
+            reqBody.append("website", website);
+            reqBody.append("github", github);
+            reqBody.append("linkedin", linkedin);
+            reqBody.append("twitter", twitter);
+            reqBody.append("portfolio", portfolio);
+            reqBody.append("specializations", JSON.stringify(specializations));
+            reqBody.append("experience", JSON.stringify(experience));
+            reqBody.append("technicalSkills", JSON.stringify(jobDetails.technicalSkills));
+
+
+            // ✅ API Call
+            const result = await addJobsAPI(reqBody, reqHeader);
+            console.log("Upload Result:", result);
+
+            
+
+            if (result.status === 401) {
+                toast.warning(result.response.data);
+                handleReset();
+            } else if (result.status === 200) {
+                toast.success("Job added successfully");
+                navigate("/profile")
+                handleReset();
+            } else {
+                toast.error("Something went wrong");
+                handleReset();
+            }
+        } catch (err) {
+            console.error("Error uploading job:", err);
+            toast.error("Upload failed — check console");
+        }
     };
-
-    const reqBody = new FormData();
-
-    // ✅ [ADD HERE] → Get user's email from session storage
-    const user = JSON.parse(sessionStorage.getItem("user"));
-    const userMail = user?.email || "";
-    reqBody.append("userMail", userMail);
-    // 🔺 this line makes sure backend receives the uploader’s email
-
-    // ✅ Append image files first — multer must receive these exact names
-    profilePhoto.forEach((file) => reqBody.append("profilePhoto", file));
-    backgroundPhoto.forEach((file) => reqBody.append("backgroundPhoto", file));
-    works.forEach((file) => reqBody.append("works", file));
-
-    // ✅ Append normal text + JSON fields
-    reqBody.append("username", username);
-    reqBody.append("jobTitle", jobTitle);
-    reqBody.append("fees", fees);
-    reqBody.append("availability", availability);
-    reqBody.append("location", location);
-    reqBody.append("summary", summary);
-    reqBody.append("email", email);
-    reqBody.append("phone", phone);
-    reqBody.append("website", website);
-    reqBody.append("github", github);
-    reqBody.append("linkedin", linkedin);
-    reqBody.append("twitter", twitter);
-    reqBody.append("portfolio", portfolio);
-    reqBody.append("status", status);
-    reqBody.append("specializations", JSON.stringify(specializations));
-    reqBody.append("experience", JSON.stringify(experience));
-    reqBody.append("technicalSkills", JSON.stringify(jobDetails.technicalSkills));
-   
-
-    // ✅ API Call
-    const result = await addJobsAPI(reqBody, reqHeader);
-    console.log("Upload Result:", result);
-
-    if (result.status === 401) {
-      toast.warning(result.response.data);
-      handleReset();
-    } else if (result.status === 200) {
-      toast.success("Job added successfully");
-      handleReset();
-    } else {
-      toast.error("Something went wrong");
-      handleReset();
-    }
-  } catch (err) {
-    console.error("Error uploading job:", err);
-    toast.error("Upload failed — check console");
-  }
-};
 
 
 
@@ -389,11 +401,6 @@ const flattenedTechnicalSkills =
                             className="p-3 rounded-lg bg-neutral-800 border border-neutral-700 focus:outline-none focus:border-red-500"
                         />
                     </div>
-                </div>
-
-                {/* Section 3 */}
-                <div className="grid md:grid-cols-2 gap-6 job-section">
-
                     <div className="flex flex-col">
                         <label className="text-sm text-gray-400 mb-2">Location</label>
                         <input
@@ -404,7 +411,13 @@ const flattenedTechnicalSkills =
                             className="p-3 rounded-lg bg-neutral-800 border border-neutral-700 focus:outline-none focus:border-red-500"
                         />
                     </div>
-                    <div className="flex flex-col">
+                </div>
+
+                {/* Section 3 */}
+                <div className="grid md:grid-cols-2 gap-6 job-section">
+
+
+                    {/* <div className="flex flex-col">
                         <label className="text-sm text-gray-400 mb-2">Status</label>
                         <input
                             value={jobDetails.status}
@@ -413,7 +426,7 @@ const flattenedTechnicalSkills =
                             placeholder="Your city, country"
                             className="p-3 rounded-lg bg-neutral-800 border border-neutral-700 focus:outline-none focus:border-red-500"
                         />
-                    </div>
+                    </div> */}
                 </div>
 
                 {/* Summary */}
@@ -598,6 +611,18 @@ const flattenedTechnicalSkills =
                         className="p-3 rounded-lg bg-neutral-800 border border-neutral-700 text-gray-400 focus:outline-none focus:border-red-500"
                     />
                 </div>
+                <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 mt-4">
+                    {previewList.map((src, index) => (
+                        <div key={index} className="w-full aspect-square rounded-lg overflow-hidden border border-neutral-700">
+                            <img
+                                src={src}
+                                alt="preview"
+                                className="w-full h-full object-cover"
+                            />
+                        </div>
+                    ))}
+                </div>
+                
 
                 {/* Profile & Background Photos */}
                 <div className="grid md:grid-cols-2 gap-6 job-section">
@@ -636,7 +661,7 @@ const flattenedTechnicalSkills =
 
                     <div className="bg-neutral-800/20 rounded-lg">
                         <Link to={"/profile"}>
-                           <span className="px-4 py-3  hover:bg-blue-600/40  transition-all duration-300 rounded-lg text-white font-semibold  flex items-center gap-2 justify-center"><FaChevronLeft  className="text-blue-600 text-lg"/></span>
+                            <span className="px-4 py-3  hover:bg-blue-600/40  transition-all duration-300 rounded-lg text-white font-semibold  flex items-center gap-2 justify-center"><FaChevronLeft className="text-blue-600 text-lg" /></span>
                         </Link>
                     </div>
 
@@ -645,13 +670,14 @@ const flattenedTechnicalSkills =
                             onClick={handleReset}
                             type="button"
                             className="px-5 py-3  hover:bg-red-600/40 shadow-neutral-950 transition-all duration-300 rounded-lg text-white font-semibold flex items-center gap-2 justify-center ">
-                            <LuRotateCcw  className="text-red-600 text-xl"/>
+                            <LuRotateCcw className="text-red-600 text-xl" />
                         </button>
                     </div>
 
                     <div className="bg-neutral-800/20 rounded-lg">
                         <button
                             onClick={handleJobSubmit}
+                            
                             type="button"
                             className="px-4 py-2   hover:bg-green-600/40  transition-all  duration-300 rounded-lg text-white font-semibold  flex items-center gap-2 justify-center ">
                             <MdDone className="text-green-600 text-2xl" />

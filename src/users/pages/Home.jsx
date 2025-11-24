@@ -546,7 +546,7 @@ function Home() {
             </div>
           </div>
           <div className='px-10'>
-            <div style={{ height: '70px' }} className='flex items-center justify-center md:ms-80 rounded-lg border border-orange-600  mt-10 mb-25 w-80 md:w-200 md:mt-24'>
+            <div style={{ height: '70px' }} className='flex items-center justify-center md:ms-100 rounded-lg border border-orange-600  mt-10 mb-25 w-80  md:w-200 md:mt-24'>
               <FlowingMenu items={demoItems} />
             </div>
           </div>
